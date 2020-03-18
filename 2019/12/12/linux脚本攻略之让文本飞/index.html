@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="shell脚本攻略第四章之让文本飞这一章主要是介绍一些针对文本的操作，包括grep，sed，awk，命令等。">
+<meta name="keywords" content="shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux脚本攻略之让文本飞">
+<meta property="og:url" content="http://harper-yang.github.io/2019/12/12/linux脚本攻略之让文本飞/index.html">
+<meta property="og:site_name" content="harper-yang">
+<meta property="og:description" content="shell脚本攻略第四章之让文本飞这一章主要是介绍一些针对文本的操作，包括grep，sed，awk，命令等。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-10T06:02:48.305Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux脚本攻略之让文本飞">
+<meta name="twitter:description" content="shell脚本攻略第四章之让文本飞这一章主要是介绍一些针对文本的操作，包括grep，sed，awk，命令等。">
+  <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
+  <link rel="canonical" href="http://harper-yang.github.io/2019/12/12/linux脚本攻略之让文本飞/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>linux脚本攻略之让文本飞 | harper-yang</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">harper-yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2019/12/12/linux脚本攻略之让文本飞/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Harper Yang">
+      <meta itemprop="description" content="Harper Yang的个人网站">
+      <meta itemprop="image" content="/images/avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="harper-yang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">linux脚本攻略之让文本飞
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-12 15:52:47" itemprop="dateCreated datePublished" datetime="2019-12-12T15:52:47+08:00">2019-12-12</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-10 14:02:48" itemprop="dateModified" datetime="2020-03-10T14:02:48+08:00">2020-03-10</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/linux脚本攻略/" itemprop="url" rel="index"><span itemprop="name">linux脚本攻略</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="shell脚本攻略第四章之让文本飞"><a href="#shell脚本攻略第四章之让文本飞" class="headerlink" title="shell脚本攻略第四章之让文本飞"></a>shell脚本攻略第四章之让文本飞</h2><p>这一章主要是介绍一些针对文本的操作，包括grep，sed，awk，命令等。</p>
+<a id="more"></a>
+
+<h5 id="cut的使用技巧，cut是一个将文本切分的小工具"><a href="#cut的使用技巧，cut是一个将文本切分的小工具" class="headerlink" title="cut的使用技巧，cut是一个将文本切分的小工具"></a>cut的使用技巧，cut是一个将文本切分的小工具</h5><pre><code class="shell">#! /bin/bash
+
+# cut 是一个将文本按列切分的小工具，可以指定每列的定界符,field_list 是需要显示的列，有列号醉成，用逗号隔开
+cut -f field_list filename
+cut -f 2,3 filename
+
+# 读取第一列
+cut -f 1 cut_data.txt
+
+# 打印除了第三列外的其他列
+cut -f 3 --complement cut_data.txt
+
+# 执行字段的定界符
+cut -f 2 -d &quot;;&quot; cut_data.txt</code></pre>
+<h5 id="正则表达式，正则表达式的应用非常广泛，可以用于sed，grep，awk匹配文本，这里结合grep命令一起进行讲解，正则表达式的详细讲解参见正则表达式"><a href="#正则表达式，正则表达式的应用非常广泛，可以用于sed，grep，awk匹配文本，这里结合grep命令一起进行讲解，正则表达式的详细讲解参见正则表达式" class="headerlink" title="正则表达式，正则表达式的应用非常广泛，可以用于sed，grep，awk匹配文本，这里结合grep命令一起进行讲解，正则表达式的详细讲解参见正则表达式"></a>正则表达式，正则表达式的应用非常广泛，可以用于sed，grep，awk匹配文本，这里结合grep命令一起进行讲解，正则表达式的详细讲解参见<a href="https://harper-yang.github.io/2019/09/05/shell之正则表达式/">正则表达式</a></h5><pre><code class="sh">#!/bin/bash
+
+# 匹配文本中的所有单词
+(?[a-zA-z]+?)
+
+# 在文件中搜索一个单词 grep match_pattern filename
+echo -e &quot;this is a word next line&quot; | grep word
+
+# grep 也可以对多个文件进行搜索,--color 会重点标注匹配到的单词
+grep &quot;match_text&quot; file1 file2 file3 --color=auto
+
+# 使用正则-E 使用扩展正则表达式，-v表示invert，打印除了match_pattern外的所有行
+grep -E &quot;[a-z]+&quot;
+
+# 统计文本中匹配字符串的行数
+grep -c &quot;text&quot; filename
+
+# 打印出包含字符换的文本
+grep pattern_text -n filename
+
+# 递归搜索文件
+grep &quot;text&quot; / -R -n
+
+# -i 忽略大小写
+echo hello world | grep -i &quot;HELLO&quot;
+
+# 在目录中搜索所有的.c和.cpp文件
+grep &quot;main()&quot; . -r --includ *.{c,cpp}
+
+# 使用0值字节后缀的grep与xargs,-Z可以指定0值字节作为终结符
+grep &quot;test&quot; file* -lZ | xargs -0 rm
+
+# 打印出匹配文本之前或之后的行,之后的n行，用-A选项，之前的n行，用-B选项，之前加之后用-C选项
+seq 10 | grep 5 -A 3 -B 3
+</code></pre>
+<h5 id="grep的示例应用"><a href="#grep的示例应用" class="headerlink" title="grep的示例应用"></a>grep的示例应用</h5><pre><code class="shell">#!/bin/bash
+
+# 测试文件中是否包含特定的文本文件
+function contains() {
+    if [ $# -ne 2 ];
+    then echo  &quot;$0 match_text filename&quot;
+    exit -1
+    fi
+
+    match_text=$1
+    filename=$2
+
+    grep -q $match_text $filename
+
+    if [ $? -eq 0 ];
+    then echo &quot;the text exist in the file&quot;
+    else echo &quot;text does not exist in the file&quot;
+    fi
+
+}
+
+contains $1 $2
+</code></pre>
+<h5 id="sed的使用技巧，sed是一个文本流处理工具，主要用于文本替换等操作"><a href="#sed的使用技巧，sed是一个文本流处理工具，主要用于文本替换等操作" class="headerlink" title="sed的使用技巧，sed是一个文本流处理工具，主要用于文本替换等操作"></a>sed的使用技巧，sed是一个文本流处理工具，主要用于文本替换等操作</h5><pre><code class="shell">#!/bin/bash
+
+# 替换指定文本中的字符串
+sed &#39;s/pattern/replace_str/&#39; file
+
+# -i将替换结果应用于源文件
+sed -i &#39;s/text/replace/&#39; file
+
+# 默认只替换第一处符合的内容，替换全部需在尾部加g
+sed &#39;s/text/replace/g&#39; file
+
+# 从第N出开始替换
+sed &#39;s/text/replace/ng&#39; file
+
+
+# 移除空白行，空白行用^$匹配
+sed &#39;/^$/d&#39; file
+
+# &amp; 标记匹配样式的字符串，能够在替换字符串时使用已匹配的内容
+echo this is a exampel | sed &#39;s/\w\+/[&amp;]/g&#39;
+
+# 子串匹配标记\1
+echo this is digit 7 in a number | sed &#39;s/digit \([0-9])/\1/&#39;
+
+# 引用
+text=hello
+echo hello world | sed &quot;s/$text/HELLO/&quot; 
+</code></pre>
+<h5 id="awk命令，awk命令可以对列和行进行操作，当我们需要循环处理每一行的数据时，首先应该想到的就是awk命令"><a href="#awk命令，awk命令可以对列和行进行操作，当我们需要循环处理每一行的数据时，首先应该想到的就是awk命令" class="headerlink" title="awk命令，awk命令可以对列和行进行操作，当我们需要循环处理每一行的数据时，首先应该想到的就是awk命令"></a>awk命令，awk命令可以对列和行进行操作，当我们需要循环处理每一行的数据时，首先应该想到的就是awk命令</h5><pre><code class="shell">#!/bin/bash
+
+# awk可以对列和行进行操作，他又很多内建的功能，辱数组，函数凳
+
+# 一个awk甲苯通常由BEGIN，END和模式匹配的通用语句三部分组成
+# awk &#39;BEGIN{print &quot;start&quot;} pattern {commands} END{print &quot;end&quot;}&#39;
+
+# 工作原理：先执行BEGIN语句，再从文件或stdin中读取一行，然后执行pattern，重复过程至文件读取完毕，再执行END语句
+
+echo -e &quot;line1\nline2&quot; | awk &#39;BEGIN{print &quot;start&quot;} {print} END{print &quot;END&quot;}&#39;
+
+# 通常将初始化语句及打印文件头部的语句放入BEGIN语句块中，将打印结果放入END语句块中
+
+# 特殊变量
+# NR 记录数量，在执行过程中对应当前行号
+# NF 字段数量，执行过程中对应当前行的字段数
+# $0 变量包含了执行过程中的当前行的文本内容
+# $1 包含了第一个字段的文本内容
+# $2 包含了第二个字段的文本内容
+
+echo -e &quot;line1 f2 f3\nlin3 f4 f5\nline3 f6 f7&quot; | \
+awk &#39;{print &quot;line no :&quot; NR &quot;,No of fields:&quot; NF , &quot;$0=&quot;$0}&#39;
+
+# 传递外部变量到awk
+var1=&quot;aa&quot; var2=&quot;bb&quot;
+echo | awk &#39;{print v1,v2}&#39; v1=$var1 v2=$var2
+
+# 设置定界符
+awk -F: &#39;{print $NF }&#39; /etc/password
+
+# 从awk中读取命令输出,getline将grep的输出读入cmdout，再打印出来
+echo | awk &#39;{ &quot;grep root /etc/passwd&quot; | getline cmdout ; print cmdout}&#39;
+
+# 在awk中使用循环
+for(i in array){print array[i] ; }</code></pre>
+<h5 id="统计文件词频的工具方法，这个方法综合应用了grep，及awk命令，可以巩固上面所学，具体落地到实际的应用当中去"><a href="#统计文件词频的工具方法，这个方法综合应用了grep，及awk命令，可以巩固上面所学，具体落地到实际的应用当中去" class="headerlink" title="统计文件词频的工具方法，这个方法综合应用了grep，及awk命令，可以巩固上面所学，具体落地到实际的应用当中去"></a>统计文件词频的工具方法，这个方法综合应用了grep，及awk命令，可以巩固上面所学，具体落地到实际的应用当中去</h5><pre><code class="shell">#!/usr/bin/env bash
+
+# 使用数组统计词频
+# 判断参数是否是一个
+if [[ $# -ne 1 ]];
+then echo &quot;Usage: $0 filename&quot;;
+exit -1
+fi
+
+filename=$1
+# 输出是单词的文本，-o选项打印出由换行符分割的匹配字符序列
+egrep -o  &quot;\b[[:alpha:]]+\b&quot; ${filename} | \
+awk &#39;{ count[$0]++ }
+END { printf (&quot;%-14s%s\n&quot; , &quot;word&quot;,&quot;count&quot;);
+for (ind in count)
+{
+    printf (&quot;%-14s%d\n&quot;, ind, count[ind]); }
+}&#39;</code></pre>
+<h5 id="paste命令，这是一个对列进行拼接的工具"><a href="#paste命令，这是一个对列进行拼接的工具" class="headerlink" title="paste命令，这是一个对列进行拼接的工具"></a>paste命令，这是一个对列进行拼接的工具</h5><pre><code class="shell">#1/bin/bash
+
+# 按列拼接
+paste paste1.txt paste2.txt</code></pre>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/shell/" rel="tag"># shell</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/12/08/linux脚本攻略之命令之乐/" rel="next" title="linux脚本攻略之命令之乐">
+                  <i class="fa fa-chevron-left"></i> linux脚本攻略之命令之乐
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/12/并发的挑战/" rel="prev" title="并发的挑战">
+                  并发的挑战 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell脚本攻略第四章之让文本飞"><span class="nav-number">1.</span> <span class="nav-text">shell脚本攻略第四章之让文本飞</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cut的使用技巧，cut是一个将文本切分的小工具"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">cut的使用技巧，cut是一个将文本切分的小工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#正则表达式，正则表达式的应用非常广泛，可以用于sed，grep，awk匹配文本，这里结合grep命令一起进行讲解，正则表达式的详细讲解参见正则表达式"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">正则表达式，正则表达式的应用非常广泛，可以用于sed，grep，awk匹配文本，这里结合grep命令一起进行讲解，正则表达式的详细讲解参见正则表达式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#grep的示例应用"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">grep的示例应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sed的使用技巧，sed是一个文本流处理工具，主要用于文本替换等操作"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">sed的使用技巧，sed是一个文本流处理工具，主要用于文本替换等操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#awk命令，awk命令可以对列和行进行操作，当我们需要循环处理每一行的数据时，首先应该想到的就是awk命令"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">awk命令，awk命令可以对列和行进行操作，当我们需要循环处理每一行的数据时，首先应该想到的就是awk命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#统计文件词频的工具方法，这个方法综合应用了grep，及awk命令，可以巩固上面所学，具体落地到实际的应用当中去"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">统计文件词频的工具方法，这个方法综合应用了grep，及awk命令，可以巩固上面所学，具体落地到实际的应用当中去</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#paste命令，这是一个对列进行拼接的工具"><span class="nav-number">1.0.0.7.</span> <span class="nav-text">paste命令，这是一个对列进行拼接的工具</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avator.jpg"
+      alt="Harper Yang">
+  <p class="site-author-name" itemprop="name">Harper Yang</p>
+  <div class="site-description" itemprop="description">Harper Yang的个人网站</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">博文</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/harper-yang" title="GitHub &rarr; https://github.com/harper-yang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.weibo.com/5264745939/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Weibo &rarr; https://www.weibo.com/5264745939/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Harper Yang</span>
+</div>
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+  <!-- <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div> -->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  ~~
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

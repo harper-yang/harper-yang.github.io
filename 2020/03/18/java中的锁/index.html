@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="java中的锁Lock接口使用synchronized关键字会隐式的获取锁，但是他将锁的获取和释放固化了，Lock锁可以显示的获取锁和释放锁。 Lock lock = new ReentrantLock(); lock.lock(); try {  }finally {     lock.unlock(); } 在finally中释放锁，目的是保证在获取到锁之后，最终能够被释放。 不要将获取锁的过">
+<meta name="keywords" content="并发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java中的锁">
+<meta property="og:url" content="http://harper-yang.github.io/2020/03/18/java中的锁/index.html">
+<meta property="og:site_name" content="harper-yang">
+<meta property="og:description" content="java中的锁Lock接口使用synchronized关键字会隐式的获取锁，但是他将锁的获取和释放固化了，Lock锁可以显示的获取锁和释放锁。 Lock lock = new ReentrantLock(); lock.lock(); try {  }finally {     lock.unlock(); } 在finally中释放锁，目的是保证在获取到锁之后，最终能够被释放。 不要将获取锁的过">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-18T01:24:24.915Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java中的锁">
+<meta name="twitter:description" content="java中的锁Lock接口使用synchronized关键字会隐式的获取锁，但是他将锁的获取和释放固化了，Lock锁可以显示的获取锁和释放锁。 Lock lock = new ReentrantLock(); lock.lock(); try {  }finally {     lock.unlock(); } 在finally中释放锁，目的是保证在获取到锁之后，最终能够被释放。 不要将获取锁的过">
+  <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
+  <link rel="canonical" href="http://harper-yang.github.io/2020/03/18/java中的锁/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>java中的锁 | harper-yang</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">harper-yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2020/03/18/java中的锁/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Harper Yang">
+      <meta itemprop="description" content="Harper Yang的个人网站">
+      <meta itemprop="image" content="/images/avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="harper-yang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">java中的锁
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-18 09:22:23 / 修改时间：09:24:24" itemprop="dateCreated datePublished" datetime="2020-03-18T09:22:23+08:00">2020-03-18</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="java中的锁"><a href="#java中的锁" class="headerlink" title="java中的锁"></a>java中的锁</h2><h3 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h3><p>使用synchronized关键字会隐式的获取锁，但是他将锁的获取和释放固化了，Lock锁可以显示的获取锁和释放锁。</p>
+<pre><code class="java">Lock lock = new ReentrantLock();
+lock.lock();
+try {
+
+}finally {
+    lock.unlock();
+}</code></pre>
+<p>在finally中释放锁，目的是保证在获取到锁之后，最终能够被释放。</p>
+<p>不要将获取锁的过程写到try 中，如果在获取锁的时候发生异常，会导致锁被无故释放。</p>
+<p>Lock接口提供的synchronized不具备的特性</p>
+<ul>
+<li><p>尝试非阻塞的获取锁</p>
+</li>
+<li><p>能够中断的获取锁</p>
+</li>
+<li><p>超时获取锁</p>
+</li>
+</ul>
+<p>Lock的接口方法</p>
+<ul>
+<li>lock() 获取锁，调用该方法当前线程获取锁，获取锁后，从该方法返回</li>
+<li>lockInterruptibly()，中断的获取锁，该方法会相应中断，即在锁的获取过程中可以中断该线程</li>
+<li>tryLock()，非阻塞的获取锁，调用后立即返回，获取到返回true，否则为false</li>
+<li>unlock()，释放锁</li>
+</ul>
+<h3 id="队列同步器（aqs）"><a href="#队列同步器（aqs）" class="headerlink" title="队列同步器（aqs）"></a>队列同步器（aqs）</h3><p>队列同步器AbstractQueuedSynchronized，是用来构建锁的基础框架，使用了一个int成员变量表示同步状态，通过内置的FIFO队列完成资源获取线程的排队工作。</p>
+<p>同步器的使用方法主要为继承，子类继承他的抽象方法来管理同步状态。</p>
+<p>如何理解同步器和锁的关系：</p>
+<ul>
+<li>锁是面向使用者的，它定义了使用者于锁交互的接口，隐藏了实现细节</li>
+<li>同步器面向的是锁的实现者，它简化了锁的实现方式，屏蔽了同步状态管理，线程的排队，等待和唤醒等底层操作。</li>
+</ul>
+<h4 id="同步器的接口和示例"><a href="#同步器的接口和示例" class="headerlink" title="同步器的接口和示例"></a>同步器的接口和示例</h4><p>同步器的设计是基于模板方法模式的，需要使用者继承同步器并重写指定的方法。</p>
+<p>可重写的方法：</p>
+<ul>
+<li>tryAcquire(int args)：独占式的获取同步状态，实现该方法需要查询当前状态并判断同步状态是否符合预期，然后使用CAS设置同步状态。</li>
+<li>tryRelease(int args)：独占式释放同步状态，等待获取同步状态的线程将有机会获取同步状态</li>
+<li>tryAcquiredShared(int agrs)：共享式的获取同步状态，返回大于等于0的值，表示获取成功，反之，获取失败</li>
+<li>tryReleaseShared(int args)：共享式的释放同步状态</li>
+<li>isHeldExclusively()：当前同步器是否在独占模式下被线程占用，一般该方法表示是否被当前线程所独占</li>
+</ul>
+<p>模板方法：模板方法基本分为三类：独占式获取释放同步状态，共享式获取释放同步状态和查询同步队列的等待情况。</p>
+<p>独占锁：在同一时刻只有一个线程获取到锁，而其他获取锁的线程之恶能处于同步队列中等待，只有获取锁的线程释放了锁，后记的线程才能获取锁。</p>
+<pre><code class="java">public class Mutex implements Lock {
+
+    public static class Sync extends AbstractQueuedSynchronizer {
+
+        // 是否处于独占状态
+        public boolean isHeldExclusively() {
+            return getState() == 1;
+        }
+
+        // 状态为0的时候获取锁
+        @Override
+        protected boolean tryAcquire(int acquires) {
+            if (compareAndSetState(0, acquires)) {
+                setExclusiveOwnerThread(Thread.currentThread());
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        protected boolean tryRelease(int arg) {
+            if (getState() == 0) {
+                throw new IllegalMonitorStateException();
+            }
+            setExclusiveOwnerThread(null);
+            setState(0);
+            return true;
+        }
+    }
+
+    private final Sync sync = new Sync();
+
+    @Override
+    public void lock() {
+        sync.acquire(1);
+    }
+
+    @Override
+    public void lockInterruptibly() throws InterruptedException {
+        sync.acquireInterruptibly(1);
+    }
+
+    @Override
+    public boolean tryLock() {
+        return sync.tryAcquire(1);
+    }
+
+    @Override
+    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
+        return sync.tryAcquireNanos(1, unit.toNanos(time));
+    }
+
+    @Override
+    public void unlock() {
+        sync.release(1);
+    }
+
+    @Override
+    public Condition newCondition() {
+        return null;
+    }
+}</code></pre>
+<h4 id="队列同步器的实现分析"><a href="#队列同步器的实现分析" class="headerlink" title="队列同步器的实现分析"></a>队列同步器的实现分析</h4><h5 id="同步队列"><a href="#同步队列" class="headerlink" title="同步队列"></a>同步队列</h5><p>同步器内部以来同步队列（双向FIFO队列）完成同步状态的管理，当前线程获取同步状态失败时，会将当前线程的等待状态等信息构成节点加入同步队列，同时阻塞当前线程，当同步状态释放时，会把首节点线程唤醒，使其获取同步状态。</p>
+<p>AQS记录首节点head和尾节点tail。没有成功获取同步状态线程的会成为节点变成尾部。尾节点的设置必须保证线程安全，所以使用compareAndSetTail。设置首节点的是获取同步状态成功的线程来完成的，只有一个线程能获取成功，所以不需要CAS来保证。</p>
+<p>共享式获取与独占式获取最主要的区别就是在同一时刻能否有多个线程同时获取到同步状态。例如对一个文件读操作可以是共享的，写操作是独占的。</p>
+<p>一个共享式同步锁的示例，同一时刻至多允许两个线程同时访问</p>
+<pre><code class="java">public class TwinsLock implements Lock {
+
+    // 设置资源数 2
+    private final Sync sync = new Sync(2);
+
+    private static final class Sync extends AbstractQueuedSynchronizer {
+
+        Sync(int count) {
+            if (count &lt;= 0) {
+                throw new IllegalArgumentException(&quot;count must large than zero&quot;);
+            }
+            setState(count);
+        }
+
+        @Override
+        protected int tryAcquireShared(int reduceCount) {
+            for (; ; ) {
+                int current = getState();
+                int newCount = current - reduceCount;
+                if (newCount &lt; 0 || compareAndSetState(current, newCount)) {
+                    return newCount;
+                }
+            }
+        }
+
+        @Override
+        protected boolean tryReleaseShared(int returnCount) {
+
+            for (; ; ) {
+                int current = getState();
+                int newCount = current + returnCount;
+                if (compareAndSetState(current, newCount)) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void lock() {
+        sync.acquireShared(1);
+    }
+
+    @Override
+    public void lockInterruptibly() throws InterruptedException {
+
+    }
+
+    @Override
+    public boolean tryLock() {
+        return false;
+    }
+
+    @Override
+    public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
+        return false;
+    }
+
+    @Override
+    public void unlock() {
+        sync.releaseShared(1);
+    }
+
+    @Override
+    public Condition newCondition() {
+        return null;
+    }
+
+    // 验证twinsLock是否有效
+    public static void main(String[] args) {
+        final Lock lock = new TwinsLock();
+        class Worker extends Thread {
+            @Override
+            public void run() {
+                while (true) {
+                    lock.lock();
+
+                    try {
+                        ThreadStateSample.SleepUtils.second(1);
+                        System.out.println(Thread.currentThread().getName());
+                        ThreadStateSample.SleepUtils.second(1);
+                    } finally {
+                        lock.unlock();
+                    }
+
+                }
+            }
+        }
+        // 启动10个线程
+        for (int i = 0; i &lt; 10; i++) {
+            Worker w = new Worker();
+            w.setDaemon(true);
+            w.start();
+        }
+        // 每隔一秒换行
+        for (int i = 0; i &lt; 10; i++) {
+            ThreadStateSample.SleepUtils.second(1);
+            System.out.println();
+        }
+
+    }
+}</code></pre>
+<p>设置初始时status为2，当一个线程获取时，status-1，线程释放，则sttus+1，如果为0，则阻塞该队列</p>
+<h3 id="重入锁ReetrantLock"><a href="#重入锁ReetrantLock" class="headerlink" title="重入锁ReetrantLock"></a>重入锁ReetrantLock</h3><p>重入锁即支持重进入的锁，表示该锁能够支持一个线程对资源的重复加锁，除此之外，该锁还支持获取锁的公平锁和非公平锁的选择。</p>
+<p>前面的Mutex锁，当一个线程调用Mutex的lock()后，再次调用lock()，该线程会被自己所阻塞，因为Mutex在tryAcquire方法中没有考虑占有锁的线程再次获取锁的场景，而是返回了false，导致阻塞。synchronized关键字隐式的支持冲进入。</p>
+<p>锁的公平性问题：如果先获取锁的请求线程先被满足，则称之为公平锁，否则的话是非公平锁。</p>
+<h4 id="实现重进入"><a href="#实现重进入" class="headerlink" title="实现重进入"></a>实现重进入</h4><p>重进入是指任意线程在获取到锁之后能够再次获取到锁而不被锁阻塞，需要解决两个问题</p>
+<ul>
+<li>线程再次获取锁：需要识别获取锁的线程是否是当前占有锁的线程。如果是则再次获取</li>
+<li>锁的最终释放：线程重复n次获取锁，则在第n次释放该锁后，其他线程能够获取到该锁。锁的最终释放要对锁的获取进行自增，锁释放时自减，当计数器为0时，则表示成功释放。</li>
+</ul>
+<p>ReentrantLock的nonfairTryAcquire方法</p>
+<pre><code class="java">final boolean nonfairTryAcquire(int acquires) {
+            final Thread current = Thread.currentThread();
+            int c = getState();
+            if (c == 0) {
+                if (compareAndSetState(0, acquires)) {
+                    setExclusiveOwnerThread(current);
+                    return true;
+                }
+            }
+            else if (current == getExclusiveOwnerThread()) {
+                int nextc = c + acquires;
+                if (nextc &lt; 0) // overflow
+                    throw new Error(&quot;Maximum lock count exceeded&quot;);
+                setState(nextc);
+                return true;
+            }
+            return false;
+        }</code></pre>
+<p>处理逻辑是：c==0 ，直接获取锁，否则判断当前线程是否是获取锁的线程，是的话状态值增加。</p>
+<p>ReentrantLock的tryRelease方法</p>
+<pre><code class="java">protected final boolean tryRelease(int releases) {
+            int c = getState() - releases;
+            if (Thread.currentThread() != getExclusiveOwnerThread())
+                throw new IllegalMonitorStateException();
+            boolean free = false;
+            if (c == 0) {
+                free = true;
+                setExclusiveOwnerThread(null);
+            }
+            setState(c);
+            return free;
+        }</code></pre>
+<p>锁被获取了n次，那么前n-1次必须返回false，每次状态值自减。</p>
+<h4 id="非公平锁和公平锁的区别"><a href="#非公平锁和公平锁的区别" class="headerlink" title="非公平锁和公平锁的区别"></a>非公平锁和公平锁的区别</h4><p>公平性是针对获取锁而言的，公平锁的获取是按照FIFO的。</p>
+<pre><code class="java">/**
+         * Fair version of tryAcquire.  Don&#39;t grant access unless
+         * recursive call or no waiters or is first.
+         */
+        protected final boolean tryAcquire(int acquires) {
+            final Thread current = Thread.currentThread();
+            int c = getState();
+            if (c == 0) {
+                if (!hasQueuedPredecessors() &amp;&amp;
+                    compareAndSetState(0, acquires)) {
+                    setExclusiveOwnerThread(current);
+                    return true;
+                }
+            }
+            else if (current == getExclusiveOwnerThread()) {
+                int nextc = c + acquires;
+                if (nextc &lt; 0)
+                    throw new Error(&quot;Maximum lock count exceeded&quot;);
+                setState(nextc);
+                return true;
+            }
+            return false;
+        }</code></pre>
+<p>公平锁的条件加了一个<code>hasQueuedPredecessors</code>，加入同步队列中当前节点是否有前驱节点的判断，如果该方法返回true，则代表有前驱节点，有线程更早的请求获取锁，所以需要前驱线程先获取锁才行。</p>
+<h3 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h3><p>ReentrantReadWriteLock读写锁维护了一对锁，读线程在同一时刻允许多个线程访问，但是写线程访问时，所有读写线程均被阻塞。</p>
+<ul>
+<li>支持公平性和非公平性的选择。</li>
+<li>支持重进入</li>
+</ul>
+<p>一个使用的示例</p>
+<pre><code class="java">public class Cache {
+
+    static Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();
+    static ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    static Lock r = rwl.readLock();
+    static Lock w = rwl.writeLock();
+
+    // 获取一个key对应的value
+    public static final Object get(String key) {
+        r.lock();
+        try {
+
+            return map.get(key);
+        }finally {
+            r.unlock();
+        }
+    }
+
+    // 设置key对应的value，返回旧的value
+    public static final Object put(String key, Object value) {
+        w.lock();
+        try {
+
+            return map.put(key, value);
+        }finally {
+            w.unlock();
+        }
+    }
+
+    // 清空所有的内容
+    public static final void clear() {
+        w.lock();
+        try {
+            map.clear();
+        } finally {
+            w.unlock();
+        }
+    }
+}</code></pre>
+<h4 id="读写锁的实现分析"><a href="#读写锁的实现分析" class="headerlink" title="读写锁的实现分析"></a>读写锁的实现分析</h4><p>状态设计：状态按位切割，高16位表示读，低16位表示写</p>
+<p>获取写锁：基本上和reetrantLock一致，加了一个条件，获取读锁，如果存在读锁则不能获取锁</p>
+<h3 id="LockSupport工具"><a href="#LockSupport工具" class="headerlink" title="LockSupport工具"></a>LockSupport工具</h3><p>提供了基本的线程阻塞和唤醒功能。</p>
+<ul>
+<li>park()：阻塞当前线程，调用unpark或者当前线程被中断才能从park()方法返回。</li>
+<li>parkNanos()：加了一个超时返回。</li>
+<li>parkUntil：加了一个deadline</li>
+<li>unpark：唤醒阻塞线程。</li>
+</ul>
+<h3 id="Condtion-接口"><a href="#Condtion-接口" class="headerlink" title="Condtion 接口"></a>Condtion 接口</h3>
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/并发/" rel="tag"># 并发</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/12/java内存模型/" rel="next" title="java内存模型">
+                  <i class="fa fa-chevron-left"></i> java内存模型
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java中的锁"><span class="nav-number">1.</span> <span class="nav-text">java中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lock接口"><span class="nav-number">1.1.</span> <span class="nav-text">Lock接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#队列同步器（aqs）"><span class="nav-number">1.2.</span> <span class="nav-text">队列同步器（aqs）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#同步器的接口和示例"><span class="nav-number">1.2.1.</span> <span class="nav-text">同步器的接口和示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#队列同步器的实现分析"><span class="nav-number">1.2.2.</span> <span class="nav-text">队列同步器的实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#同步队列"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">同步队列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重入锁ReetrantLock"><span class="nav-number">1.3.</span> <span class="nav-text">重入锁ReetrantLock</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#实现重进入"><span class="nav-number">1.3.1.</span> <span class="nav-text">实现重进入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非公平锁和公平锁的区别"><span class="nav-number">1.3.2.</span> <span class="nav-text">非公平锁和公平锁的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读写锁"><span class="nav-number">1.4.</span> <span class="nav-text">读写锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#读写锁的实现分析"><span class="nav-number">1.4.1.</span> <span class="nav-text">读写锁的实现分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LockSupport工具"><span class="nav-number">1.5.</span> <span class="nav-text">LockSupport工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Condtion-接口"><span class="nav-number">1.6.</span> <span class="nav-text">Condtion 接口</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avator.jpg"
+      alt="Harper Yang">
+  <p class="site-author-name" itemprop="name">Harper Yang</p>
+  <div class="site-description" itemprop="description">Harper Yang的个人网站</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">博文</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/harper-yang" title="GitHub &rarr; https://github.com/harper-yang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.weibo.com/5264745939/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Weibo &rarr; https://www.weibo.com/5264745939/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Harper Yang</span>
+</div>
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+  <!-- <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div> -->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  ~~
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

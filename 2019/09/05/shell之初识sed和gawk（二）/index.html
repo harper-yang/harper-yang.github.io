@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="初识sed和gawk（二）更多的替换选项之前学习到/s为替换文本，现在来详细研究该命令的使用方法">
+<meta name="keywords" content="shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell之初识sed和gawk（二）">
+<meta property="og:url" content="http://harper-yang.github.io/2019/09/05/shell之初识sed和gawk（二）/index.html">
+<meta property="og:site_name" content="harper-yang">
+<meta property="og:description" content="初识sed和gawk（二）更多的替换选项之前学习到/s为替换文本，现在来详细研究该命令的使用方法">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-10T06:02:48.306Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell之初识sed和gawk（二）">
+<meta name="twitter:description" content="初识sed和gawk（二）更多的替换选项之前学习到/s为替换文本，现在来详细研究该命令的使用方法">
+  <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
+  <link rel="canonical" href="http://harper-yang.github.io/2019/09/05/shell之初识sed和gawk（二）/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>shell之初识sed和gawk（二） | harper-yang</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">harper-yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2019/09/05/shell之初识sed和gawk（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Harper Yang">
+      <meta itemprop="description" content="Harper Yang的个人网站">
+      <meta itemprop="image" content="/images/avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="harper-yang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">shell之初识sed和gawk（二）
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-05 00:15:40" itemprop="dateCreated datePublished" datetime="2019-09-05T00:15:40+08:00">2019-09-05</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-10 14:02:48" itemprop="dateModified" datetime="2020-03-10T14:02:48+08:00">2020-03-10</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/理解shell/" itemprop="url" rel="index"><span itemprop="name">理解shell</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="初识sed和gawk（二）"><a href="#初识sed和gawk（二）" class="headerlink" title="初识sed和gawk（二）"></a>初识sed和gawk（二）</h2><h3 id="更多的替换选项"><a href="#更多的替换选项" class="headerlink" title="更多的替换选项"></a>更多的替换选项</h3><p>之前学习到<code>/s</code>为替换文本，现在来详细研究该命令的使用方法</p>
+<a id="more"></a>
+
+<ul>
+<li>替换标记<ul>
+<li>默认这个标记只会替换每行出现的第一处，要让替换命令能够替换一行中的不同地方出现的文本需要使用到<code>替换标记</code>，具体格式如下：<code>s/pattern/replacement/flags</code>，有四种替换的标记：</li>
+<li>数字，表明新文本将替换第几处匹配的地方  <code>sed &#39;s/test/trial/2&#39; data4.txt</code></li>
+<li>g，表明新文本将会替换掉所有匹配到的文本  <code>sed &#39;s/test/trial/g&#39; data4.txt</code></li>
+<li>p，表明原先行的内容要打印出来  <code>sed -n &#39;s/test/trial/p&#39; data5.txt</code>. -n的意思是进制sed输出，但是p会将原先行的内容打印出来，配合的效果就是只输出了修改过的行</li>
+<li>w file，将替换到的结果写到文件中去<code>sed &#39;s/test/trial/w test.txt&#39; data5.tx</code>，输出会保存到test.txt文件中去</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用地址"><a href="#使用地址" class="headerlink" title="使用地址"></a>使用地址</h3><p>默认情况下sed使用的命令会作用到所有行上，如果想单独作用在某行或者某几行，就需要使用到<code>行寻址</code></p>
+<p>行寻址有两种形式：</p>
+<ul>
+<li>以数字形式表示行区间</li>
+<li>用文本模式来过滤出行</li>
+</ul>
+<p>格式为：<code>[address] command`或</code> <code>address{command1 command2}</code></p>
+<p>举个例子</p>
+<ul>
+<li><p>数字方式的行寻址</p>
+<ul>
+<li><code>sed &#39;2s/dog/cat/&#39; data.txt</code>即只修改了第二行的数据</li>
+<li><code>sed &#39;2,3s/dog/cat/&#39; data.txt</code> 行地址区间</li>
+<li><code>sed &#39;2,$s/dog/cat/&#39; data.txt</code>意思是从第二行开始的所有行 </li>
+</ul>
+</li>
+<li><p>使用文本模式过滤器 </p>
+<p>sed编辑器允许指定命令来过滤要作用的行，使用下面格式：<code>/pattern/command</code></p>
+<ul>
+<li><code>sed &#39;/harper/s/bash/csh&#39; /etc/passwd</code>意思是你只修改harper用户的行</li>
+</ul>
+</li>
+</ul>
+<h3 id="删除行"><a href="#删除行" class="headerlink" title="删除行"></a>删除行</h3><p>删除行命令是<code>d</code>，这个需要格外的小心，如果你忘了加寻址模式的话，文本所有行都会被删除</p>
+<ul>
+<li>几个例子<ul>
+<li><code>sed &#39;3d&#39; data.txt</code>删除第三行的数据</li>
+<li><code>sed &#39;3,$d&#39; data.txt</code>删除第三行后面的所有数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="插入和附加文本"><a href="#插入和附加文本" class="headerlink" title="插入和附加文本"></a>插入和附加文本</h3><ul>
+<li>插入命令<code>i</code>会在指定行前增加一个新行（insert）</li>
+<li>附加命令<code>a</code>会在指定行后增加一个新行（append）</li>
+<li>命令格式：``sed ‘[address] command\ new line’</li>
+<li><code>echo &quot;text line 2&quot; | sed &#39;i\text line 1&#39;</code>意思是在line2前会出现一个line1</li>
+<li><code>sed &#39;3i\this is a new world&#39; data.txt</code>在第三行前加一句话</li>
+</ul>
+<h3 id="修改行"><a href="#修改行" class="headerlink" title="修改行"></a>修改行</h3><ul>
+<li>修改<code>c</code>(change)</li>
+</ul>
+<h3 id="转换命令"><a href="#转换命令" class="headerlink" title="转换命令"></a>转换命令</h3><p>转换命令（transform）<code>y</code>是一个可以处理单个字符的命令，格式是：<code>[address]y/inchars/outchars</code></p>
+<ul>
+<li><code>sed &#39;y/123/456/&#39; data.txt</code>意思是将1转换为4,2转换为5.3转换为6.长度不同则会报错</li>
+</ul>
+<h3 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h3><ul>
+<li><code>echo &quot;this is a test&quot; | sed &#39;p&#39;</code> <code>p</code>命令用来打印文本</li>
+<li><code>[address] w filename</code> <code>w</code>命令用来写文件</li>
+<li><code>sed &#39;1,2w test.txt&#39; data.txt</code>将data.txt中的前两行写到text.txt中区</li>
+<li><code>[address] r filename</code> <code>r</code>命令用来读取文件</li>
+<li><code>sed &#39;3r data.txt&#39; data2.txt</code>将data.txt 读到data2.txt的第三行后面去</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/shell/" rel="tag"># shell</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/09/02/shell之初识sed和gawk/" rel="next" title="shell之初识sed和gawk（一）">
+                  <i class="fa fa-chevron-left"></i> shell之初识sed和gawk（一）
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/09/05/shell之正则表达式/" rel="prev" title="shell之正则表达式">
+                  shell之正则表达式 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#初识sed和gawk（二）"><span class="nav-number">1.</span> <span class="nav-text">初识sed和gawk（二）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更多的替换选项"><span class="nav-number">1.1.</span> <span class="nav-text">更多的替换选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用地址"><span class="nav-number">1.2.</span> <span class="nav-text">使用地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除行"><span class="nav-number">1.3.</span> <span class="nav-text">删除行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插入和附加文本"><span class="nav-number">1.4.</span> <span class="nav-text">插入和附加文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改行"><span class="nav-number">1.5.</span> <span class="nav-text">修改行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换命令"><span class="nav-number">1.6.</span> <span class="nav-text">转换命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他命令"><span class="nav-number">1.7.</span> <span class="nav-text">其他命令</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avator.jpg"
+      alt="Harper Yang">
+  <p class="site-author-name" itemprop="name">Harper Yang</p>
+  <div class="site-description" itemprop="description">Harper Yang的个人网站</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">博文</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/harper-yang" title="GitHub &rarr; https://github.com/harper-yang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.weibo.com/5264745939/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Weibo &rarr; https://www.weibo.com/5264745939/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Harper Yang</span>
+</div>
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+  <!-- <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div> -->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  ~~
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
