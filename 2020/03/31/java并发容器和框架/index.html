@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="java并发容器和框架">
+<meta name="keywords" content="并发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java并发容器和框架">
+<meta property="og:url" content="http://harper-yang.github.io/2020/03/31/java并发容器和框架/index.html">
+<meta property="og:site_name" content="harper-yang">
+<meta property="og:description" content="java并发容器和框架">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-30T16:31:26.755Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java并发容器和框架">
+<meta name="twitter:description" content="java并发容器和框架">
+  <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
+  <link rel="canonical" href="http://harper-yang.github.io/2020/03/31/java并发容器和框架/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>java并发容器和框架 | harper-yang</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">harper-yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2020/03/31/java并发容器和框架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Harper Yang">
+      <meta itemprop="description" content="Harper Yang的个人网站">
+      <meta itemprop="image" content="/images/avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="harper-yang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">java并发容器和框架
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-31 00:30:23 / 修改时间：00:31:26" itemprop="dateCreated datePublished" datetime="2020-03-31T00:30:23+08:00">2020-03-31</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="java并发容器和框架"><a href="#java并发容器和框架" class="headerlink" title="java并发容器和框架"></a>java并发容器和框架</h2><a id="more"></a>
+
+<h3 id="ConcurrentHashMap的实现原理和使用"><a href="#ConcurrentHashMap的实现原理和使用" class="headerlink" title="ConcurrentHashMap的实现原理和使用"></a>ConcurrentHashMap的实现原理和使用</h3><p>ConcurrentHashMap是线程安全且高效的HashMap</p>
+<h4 id="为什么使用ConcurrentHashMap"><a href="#为什么使用ConcurrentHashMap" class="headerlink" title="为什么使用ConcurrentHashMap"></a>为什么使用ConcurrentHashMap</h4><p>HashMap可能导致死循环，而HashTable效率非常低下</p>
+<h5 id="线程不安全的HashMap"><a href="#线程不安全的HashMap" class="headerlink" title="线程不安全的HashMap"></a>线程不安全的HashMap</h5><p>在多线程环境下，使用HashMap进行put操作会导致死循环。</p>
+<pre><code class="java">final HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();
+        Thread thread = new Thread(() -&gt; {
+            for (int i = 0; i &lt; 10000; i++) {
+                new Thread(() -&gt; {
+                    map.put(UUID.randomUUID().toString(), &quot;&quot;);
+                }, &quot;ftf&quot; + i).start();
+            }
+
+        }, &quot;ftf&quot;);
+
+        thread.start();
+        thread.join();</code></pre>
+<p>原因在于多线程会导致HashMap的Entry链表形成环形数据结构。而形成环形数据结构，Entry的next节点永远不为空，就会死循环</p>
+<h5 id="效率低下的HashTable"><a href="#效率低下的HashTable" class="headerlink" title="效率低下的HashTable"></a>效率低下的HashTable</h5><p>HashTable使用Synchronized保证线程安全，当一个线程访问HashTable的同步方法，其他线程就不能访问HashTable的的方法</p>
+<h5 id="ConcurrentHashMap使用锁分段技术提高访问效率"><a href="#ConcurrentHashMap使用锁分段技术提高访问效率" class="headerlink" title="ConcurrentHashMap使用锁分段技术提高访问效率"></a>ConcurrentHashMap使用锁分段技术提高访问效率</h5><p>ConcurrentHashMap将数据分成一段一段的保存，每一个段数据配一把锁，当一个线程占用锁的数据时候，其他段的数据还是能被其他线程访问</p>
+<h4 id="ConcurrentHashMap的数据结构"><a href="#ConcurrentHashMap的数据结构" class="headerlink" title="ConcurrentHashMap的数据结构"></a>ConcurrentHashMap的数据结构</h4><p>ConcurrentHashMap由Segment数组和HashEntry数组组成。Segment是可重入锁。HashEntry是存储键值对的数据。一个ConcurrentHashMap包含一个Segment数组，每一个Segment包含一个HashEntry数组，当对HashEntry修改时，需要先获取对一个的Segment锁</p>
+<h3 id="ConcurrentLinkedQueue"><a href="#ConcurrentLinkedQueue" class="headerlink" title="ConcurrentLinkedQueue"></a>ConcurrentLinkedQueue</h3><p>线程安全的队列。</p>
+<p>如果要实现线程安全的队列有两种方式：阻塞算法和非阻塞算法。阻塞算法的独列可以使用一个锁（入队和出队是同一把锁）或两个锁。另一种是非阻塞算法，非阻塞算法的实现方式是使用循环CAS的方式来实现的。ConcurrentLinkedQueue是使用非阻塞的方式实现线程安全队列的</p>
+<h4 id="ConcurrentLinkedQueue的结构"><a href="#ConcurrentLinkedQueue的结构" class="headerlink" title="ConcurrentLinkedQueue的结构"></a>ConcurrentLinkedQueue的结构</h4><p>ConcurrentLinkedQueue由head和tail节点构成，每个节点包含节点元素和下一个节点（next）构成。</p>
+<h4 id="入队列"><a href="#入队列" class="headerlink" title="入队列"></a>入队列</h4><p>入队列就是将队列节点添加到队列的尾部。</p>
+<p>入队主要做两件事情：将入队节点设置为当前队尾节点的下一个节点。更新tail节点，如果tail节点的next节点不为空，则将入队节点设置成tail节点，如果tail节点的next节点为空，则将入队节点设置成tail的next节点，所以tail节点不总是尾节点。</p>
+<pre><code class="java">public boolean offer(E e) {
+        checkNotNull(e);
+        // 创建一个入队节点
+        final Node&lt;E&gt; newNode = new Node&lt;E&gt;(e);
+        // 死循环，入队不成功反复入队
+        for (Node&lt;E&gt; t = tail, p = t;;) {
+            Node&lt;E&gt; q = p.next;
+            // 判断tail节点的next是否为空，为空则将入队节点设置成tail节点的next节点
+            if (q == null) {
+                // p is last node
+                // 更新tail节点的next节点
+                if (p.casNext(null, newNode)) {
+                    // Successful CAS is the linearization point
+                    // for e to become an element of this queue,
+                    // and for newNode to become &quot;live&quot;.
+                    if (p != t) // hop two nodes at a time
+                        casTail(t, newNode);  // Failure is OK.
+                    return true;
+                }
+                // Lost CAS race to another thread; re-read next
+            }
+            // tail节点的next节点不为空，则将入队节点设置成tail节点
+            else if (p == q)
+                // We have fallen off list.  If tail is unchanged, it
+                // will also be off-list, in which case we need to
+                // jump to head, from which all live nodes are always
+                // reachable.  Else the new tail is a better bet.
+                p = (t != (t = tail)) ? t : head;
+            else
+                // Check for tail updates after two hops.
+                p = (p != t &amp;&amp; t != (t = tail)) ? t : q;
+        }
+    }</code></pre>
+<h4 id="出队列"><a href="#出队列" class="headerlink" title="出队列"></a>出队列</h4><p>初队列就是从队列中返回一个节点元素，并清空该节点对元素的引用。</p>
+<p>并不是每次出队都会更新head节点，当head节点有元素时，直接弹出head节点里的元素，而不更新head节点。当head节点没有元素时，出队操作才会更新head节点。</p>
+<p>这样的作法也是通过hops变量减少使用CAS更新head节点的消耗，从而提高出对效率。</p>
+<pre><code class="java">public E poll() {
+        restartFromHead:
+        for (;;) {
+            for (Node&lt;E&gt; h = head, p = h, q;;) {
+                // 获取head节点的元素
+                E item = p.item;
+                // 如果元素不为空，使用CAS设置p节点引用的元素为null
+                if (item != null &amp;&amp; p.casItem(item, null)) {
+                    // Successful CAS is the linearization point
+                    // for item to be removed from this queue.
+                    if (p != h) // hop two nodes at a time
+                        updateHead(h, ((q = p.next) != null) ? q : p);
+                    return item;
+                }
+                // 如果head节点的下一个节点空，则说明这个队列为空
+                else if ((q = p.next) == null) {
+                    updateHead(h, p);
+                    return null;
+                }
+                else if (p == q)
+                    continue restartFromHead;
+                else
+                    p = q;
+            }
+        }
+    }</code></pre>
+<h3 id="java中的阻塞队列"><a href="#java中的阻塞队列" class="headerlink" title="java中的阻塞队列"></a>java中的阻塞队列</h3><h4 id="什么是阻塞队列"><a href="#什么是阻塞队列" class="headerlink" title="什么是阻塞队列"></a>什么是阻塞队列</h4><p>阻塞队列（BlockingQueue)是一个支持两个附加操作的队列。这两个附加的操作支持阻塞的插入和移除方法。</p>
+<ul>
+<li>支持阻塞的插入方法：意思是当队列满时，队列会阻塞插入元素的线程，直到队列不满。</li>
+<li>支持阻塞的移除方法：意思是队列为空时，获取元素的线程会等待队列变成非空。</li>
+<li>阻塞队列常用于生产者和消费者的场景，生产者向队列里加元素，消费者西安队列中获取元素。阻塞队列是获取存放元素的容器。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法/处理方式</th>
+<th>抛出异常</th>
+<th>返回特殊值</th>
+<th>一直阻塞</th>
+<th>超时退出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>插入方法</td>
+<td>add（e）</td>
+<td>offer(e)</td>
+<td>put(e)</td>
+<td>offer(e,time,unit)</td>
+</tr>
+<tr>
+<td>移除方法</td>
+<td>remove(e)</td>
+<td>poll()</td>
+<td>take()</td>
+<td>poll(time,unit)</td>
+</tr>
+<tr>
+<td>检查方法</td>
+<td>element()</td>
+<td>peek</td>
+<td>不可用</td>
+<td>不可用</td>
+</tr>
+</tbody></table>
+<ul>
+<li>抛出异常：当队列满时，插入元素会报错，队列空时，获取元素也会报错。</li>
+<li>返回特殊值：插入元素，返回元素是否插入成功，成功为true</li>
+</ul>
+<h4 id="java中的阻塞队列-1"><a href="#java中的阻塞队列-1" class="headerlink" title="java中的阻塞队列"></a>java中的阻塞队列</h4><ul>
+<li><p>ArrayBlockingQueue：一个由数组结构构成的有界阻塞队列</p>
+</li>
+<li><p>LinkedBlockingQueue：一个由链表结构组成的游街阻塞队列</p>
+</li>
+<li><p>PriorityBlockingQueue：一个支持优先级排序的无界阻塞队列</p>
+</li>
+<li><p>DelayQueue：一个使用优先级队列实现的无界阻塞队列</p>
+</li>
+<li><p>SynchronousQueue：一个不存储元素的阻塞队列</p>
+</li>
+<li><p>LinkedTransferQueue：一个由链表结构组成的无界阻塞队列</p>
+</li>
+<li><p>LinkedBlockingDeque：一个由链表结构组成的双向阻塞队列</p>
+</li>
+</ul>
+<h4 id="阻塞队列的实现原理"><a href="#阻塞队列的实现原理" class="headerlink" title="阻塞队列的实现原理"></a>阻塞队列的实现原理</h4><p>使用通知模式实现</p>
+<pre><code class="java">public void put(E e) throws InterruptedException {
+        checkNotNull(e);
+        final ReentrantLock lock = this.lock;
+        lock.lockInterruptibly();
+        try {
+            while (count == items.length)
+                notFull.await();
+            enqueue(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+    private void enqueue(E x) {
+        // assert lock.getHoldCount() == 1;
+        // assert items[putIndex] == null;
+        final Object[] items = this.items;
+        items[putIndex] = x;
+        if (++putIndex == items.length)
+            putIndex = 0;
+        count++;
+        notEmpty.signal();
+    }
+
+    public E take() throws InterruptedException {
+        final ReentrantLock lock = this.lock;
+        lock.lockInterruptibly();
+        try {
+            while (count == 0)
+                notEmpty.await();
+            return dequeue();
+        } finally {
+            lock.unlock();
+        }
+    }
+private E dequeue() {
+        // assert lock.getHoldCount() == 1;
+        // assert items[takeIndex] != null;
+        final Object[] items = this.items;
+        @SuppressWarnings(&quot;unchecked&quot;)
+        E x = (E) items[takeIndex];
+        items[takeIndex] = null;
+        if (++takeIndex == items.length)
+            takeIndex = 0;
+        count--;
+        if (itrs != null)
+            itrs.elementDequeued();
+        notFull.signal();
+        return x;
+    }</code></pre>
+<p>当生产者往满的队列中添加元素时，会阻塞住生产者，当消费者消费了一个队列中的元素时，会通知生产者当前队列可用。</p>
+<h3 id="Fork-join框架"><a href="#Fork-join框架" class="headerlink" title="Fork/join框架"></a>Fork/join框架</h3><p>什么是Fork/Join框架？</p>
+<ul>
+<li>fork/join 可以将一个大人物分割成若干小惹怒我，最终汇总每个小任务结果后得到大任务结果的框架</li>
+</ul>
+<h4 id="工作窃取算法"><a href="#工作窃取算法" class="headerlink" title="工作窃取算法"></a>工作窃取算法</h4><p>工作窃取算法是指某个线程从其他队列中窃取任务来执行。假如我们需要做一个比较大的任务，可以将任务分割成若干会不依赖的小任务，为了减少线程中的竞争，把这些子任务分别放到不同的队列中。并为每个队列创建一个单独的线程来执行队列里的任务，线程和队列一一对应。有的线程干得快，有的干得慢，于是干得快的线程就去干得慢的线程队列里获取任务，为了减少竞争，通常使用双端队列，被窃取任务的线程从头部获取任务，窃取任务的线程从尾部获取任务。</p>
+<h4 id="fork-join框架的设计"><a href="#fork-join框架的设计" class="headerlink" title="fork/join框架的设计"></a>fork/join框架的设计</h4><ul>
+<li>分割任务。需要有一个fork类来把分割任务。</li>
+<li>执行任务并合并结果。分割的子任务放到双端队列中，然后启动线程分别从双端队列中获取任务执行。子任务执行完的结果统一放到一个队列中。启动一个线程从队列中获取数据，合并数据。</li>
+</ul>
+<p>fork/join使用两个类完成这个事情。</p>
+<ul>
+<li>ForkJoinTask</li>
+<li>两个子类：<ul>
+<li>RecursiveAction：用于没有返回结果的任务</li>
+<li>RecursiveTask：用于有结果返回的任务</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用fork-join框架"><a href="#使用fork-join框架" class="headerlink" title="使用fork/join框架"></a>使用fork/join框架</h4><pre><code class="java">public class CountTask extends RecursiveTask&lt;Integer&gt; {
+
+    private static final int THREADSHOLD = 2;
+
+    private int start;
+    private int end;
+
+    public CountTask(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    protected Integer compute() {
+        int sum = 0;
+        // 如果任务足够小就计算任务
+        boolean canCompute = (end - start) &lt;= THREADSHOLD;
+        if (canCompute) {
+            for (int i = start; i &lt;= end; i++) {
+                sum += i ;
+            }
+        } else {
+            // 如果任务大于阈值，就分裂成两个任务计算
+            int middle = (start + end) / 2;
+            CountTask leftTask = new CountTask(start, middle);
+            CountTask rightTask = new CountTask(middle, end);
+            leftTask.fork();
+            rightTask.fork();
+            // 等待子任务执行完得到结果
+            int leftResult = leftTask.join();
+            int rightResult = rightTask.join();
+
+            sum = leftResult + rightResult;
+        }
+
+        return sum;
+    }
+
+    public static void main(String[] args) {
+
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        // 生成一个计算任务，负责计算
+        CountTask task = new CountTask(1, 4);
+        ForkJoinTask&lt;Integer&gt; result = forkJoinPool.submit(task);
+        try {
+            // 获得结果
+            System.out.println(result.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+<h4 id="fork-join的框架异常处理"><a href="#fork-join的框架异常处理" class="headerlink" title="fork/join的框架异常处理"></a>fork/join的框架异常处理</h4><p>fork/join 可能在执行时抛出异常，但是我们没办法在主线程里直接捕获异常，所以可以通过ForkJoinTask::isCompletedAbormally方法检查是否抛出异常。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/并发/" rel="tag"># 并发</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/18/java中的锁/" rel="next" title="java中的锁">
+                  <i class="fa fa-chevron-left"></i> java中的锁
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/31/java的原子操作类/" rel="prev" title="java的原子操作类">
+                  java的原子操作类 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java并发容器和框架"><span class="nav-number">1.</span> <span class="nav-text">java并发容器和框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap的实现原理和使用"><span class="nav-number">1.1.</span> <span class="nav-text">ConcurrentHashMap的实现原理和使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么使用ConcurrentHashMap"><span class="nav-number">1.1.1.</span> <span class="nav-text">为什么使用ConcurrentHashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#线程不安全的HashMap"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">线程不安全的HashMap</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#效率低下的HashTable"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">效率低下的HashTable</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ConcurrentHashMap使用锁分段技术提高访问效率"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">ConcurrentHashMap使用锁分段技术提高访问效率</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentHashMap的数据结构"><span class="nav-number">1.1.2.</span> <span class="nav-text">ConcurrentHashMap的数据结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentLinkedQueue"><span class="nav-number">1.2.</span> <span class="nav-text">ConcurrentLinkedQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentLinkedQueue的结构"><span class="nav-number">1.2.1.</span> <span class="nav-text">ConcurrentLinkedQueue的结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#入队列"><span class="nav-number">1.2.2.</span> <span class="nav-text">入队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#出队列"><span class="nav-number">1.2.3.</span> <span class="nav-text">出队列</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java中的阻塞队列"><span class="nav-number">1.3.</span> <span class="nav-text">java中的阻塞队列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是阻塞队列"><span class="nav-number">1.3.1.</span> <span class="nav-text">什么是阻塞队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#java中的阻塞队列-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">java中的阻塞队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阻塞队列的实现原理"><span class="nav-number">1.3.3.</span> <span class="nav-text">阻塞队列的实现原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fork-join框架"><span class="nav-number">1.4.</span> <span class="nav-text">Fork/join框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作窃取算法"><span class="nav-number">1.4.1.</span> <span class="nav-text">工作窃取算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fork-join框架的设计"><span class="nav-number">1.4.2.</span> <span class="nav-text">fork/join框架的设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用fork-join框架"><span class="nav-number">1.4.3.</span> <span class="nav-text">使用fork/join框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fork-join的框架异常处理"><span class="nav-number">1.4.4.</span> <span class="nav-text">fork/join的框架异常处理</span></a></li></ol></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avator.jpg"
+      alt="Harper Yang">
+  <p class="site-author-name" itemprop="name">Harper Yang</p>
+  <div class="site-description" itemprop="description">Harper Yang的个人网站</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">博文</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/harper-yang" title="GitHub &rarr; https://github.com/harper-yang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.weibo.com/5264745939/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Weibo &rarr; https://www.weibo.com/5264745939/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Harper Yang</span>
+</div>
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+  <!-- <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.3.0</div> -->
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  ~~
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

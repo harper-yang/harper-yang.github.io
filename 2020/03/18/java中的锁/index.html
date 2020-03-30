@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="java中的锁Lock接口使用synchronized关键字会隐式的获取锁，但是他将锁的获取和释放固化了，Lock锁可以显示的获取锁和释放锁。 Lock lock = new ReentrantLock(); lock.lock(); try {  }finally {     lock.unlock(); } 在finally中释放锁，目的是保证在获取到锁之后，最终能够被释放。 不要将获取锁的过">
+  <meta name="description" content="java中的锁">
 <meta name="keywords" content="并发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java中的锁">
 <meta property="og:url" content="http://harper-yang.github.io/2020/03/18/java中的锁/index.html">
 <meta property="og:site_name" content="harper-yang">
-<meta property="og:description" content="java中的锁Lock接口使用synchronized关键字会隐式的获取锁，但是他将锁的获取和释放固化了，Lock锁可以显示的获取锁和释放锁。 Lock lock = new ReentrantLock(); lock.lock(); try {  }finally {     lock.unlock(); } 在finally中释放锁，目的是保证在获取到锁之后，最终能够被释放。 不要将获取锁的过">
+<meta property="og:description" content="java中的锁">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-18T01:24:24.915Z">
+<meta property="og:updated_time" content="2020-03-18T09:17:25.416Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java中的锁">
-<meta name="twitter:description" content="java中的锁Lock接口使用synchronized关键字会隐式的获取锁，但是他将锁的获取和释放固化了，Lock锁可以显示的获取锁和释放锁。 Lock lock = new ReentrantLock(); lock.lock(); try {  }finally {     lock.unlock(); } 在finally中释放锁，目的是保证在获取到锁之后，最终能够被释放。 不要将获取锁的过">
+<meta name="twitter:description" content="java中的锁">
   <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
   <link rel="canonical" href="http://harper-yang.github.io/2020/03/18/java中的锁/">
 
@@ -248,7 +248,7 @@
                 
               
 
-              <time title="创建时间：2020-03-18 09:22:23 / 修改时间：09:24:24" itemprop="dateCreated datePublished" datetime="2020-03-18T09:22:23+08:00">2020-03-18</time>
+              <time title="创建时间：2020-03-18 09:22:23 / 修改时间：17:17:25" itemprop="dateCreated datePublished" datetime="2020-03-18T09:22:23+08:00">2020-03-18</time>
             </span>
           
             
@@ -267,7 +267,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="java中的锁"><a href="#java中的锁" class="headerlink" title="java中的锁"></a>java中的锁</h2><h3 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h3><p>使用synchronized关键字会隐式的获取锁，但是他将锁的获取和释放固化了，Lock锁可以显示的获取锁和释放锁。</p>
+        <h2 id="java中的锁"><a href="#java中的锁" class="headerlink" title="java中的锁"></a>java中的锁</h2><a id="more"></a>
+
+<h3 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h3><p>使用synchronized关键字会隐式的获取锁，但是他将锁的获取和释放固化了，Lock锁可以显示的获取锁和释放锁。</p>
 <pre><code class="java">Lock lock = new ReentrantLock();
 lock.lock();
 try {
@@ -626,8 +628,8 @@ try {
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2020/03/12/java内存模型/" rel="next" title="java内存模型">
-                  <i class="fa fa-chevron-left"></i> java内存模型
+                <a href="/2020/03/12/java并发编程基础/" rel="next" title="java并发编程基础">
+                  <i class="fa fa-chevron-left"></i> java并发编程基础
                 </a>
               
             </div>
@@ -635,6 +637,10 @@ try {
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/03/31/java并发容器和框架/" rel="prev" title="java并发容器和框架">
+                  java并发容器和框架 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -701,7 +707,7 @@ try {
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">博文</span>
         </a>
       </div>

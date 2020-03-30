@@ -54,18 +54,20 @@
   };
 </script>
 
-  <meta name="description" content="Harper Yang的个人网站">
-<meta property="og:type" content="website">
-<meta property="og:title" content="harper-yang">
-<meta property="og:url" content="http://harper-yang.github.io/tags/shell/index.html">
+  <meta name="description" content="Executor框架">
+<meta name="keywords" content="并发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Executor框架">
+<meta property="og:url" content="http://harper-yang.github.io/2020/03/31/Executor框架/index.html">
 <meta property="og:site_name" content="harper-yang">
-<meta property="og:description" content="Harper Yang的个人网站">
+<meta property="og:description" content="Executor框架">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-30T16:35:12.753Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="harper-yang">
-<meta name="twitter:description" content="Harper Yang的个人网站">
+<meta name="twitter:title" content="Executor框架">
+<meta name="twitter:description" content="Executor框架">
   <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
-  <link rel="canonical" href="http://harper-yang.github.io/tags/shell/">
+  <link rel="canonical" href="http://harper-yang.github.io/2020/03/31/Executor框架/">
 
 
 <script id="page-configurations">
@@ -73,13 +75,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>标签: shell | harper-yang</title>
+  <title>Executor框架 | harper-yang</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -209,342 +211,180 @@
         <div class="content-wrap">
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block tag">
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">shell<small>标签</small>
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2020/03/31/Executor框架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Harper Yang">
+      <meta itemprop="description" content="Harper Yang的个人网站">
+      <meta itemprop="image" content="/images/avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="harper-yang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Executor框架
+
+          
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-31 00:33:59 / 修改时间：00:35:12" itemprop="dateCreated datePublished" datetime="2020-03-31T00:33:59+08:00">2020-03-31</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+        <h2 id="Executor框架"><a href="#Executor框架" class="headerlink" title="Executor框架"></a>Executor框架</h2><a id="more"></a>
 
-  
-  
+<h3 id="Executor框架的结构"><a href="#Executor框架的结构" class="headerlink" title="Executor框架的结构"></a>Executor框架的结构</h3><p>主要由3部分组成</p>
+<ul>
+<li>任务：任务需要实现Runnable接口或者Callable接口</li>
+<li>任务的执行：核心接口<ul>
+<li>Executor<ul>
+<li>ExecutorService<ul>
+<li>ThreadPoolExecutor</li>
+<li>ScheduledThreadExecutor</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>异步计算的结果<ul>
+<li>Future<ul>
+<li>FutureTask</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Executor框架的成员</p>
+<p>主要成员有：ThreadPoolExecutor，ScheduledThreadExecutor,Future，Runnable,Callable，Executors</p>
+<h4 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h4><p>三种工厂类创建</p>
+<ul>
+<li>Executors.FixedThreadPool()，创建使用固定线程数的FixedThreadPool的API，适用于满足资源管理的需要，限制当前线程数量的应用场景，负载比较重的服务器</li>
+<li>SingleThreadExecutor：创建单个线程的SingleThreadExecutor 的API。适用于保证顺序执行各个人物，并且在任意时间点，不会有多个线程是活动的场景</li>
+<li>CachedThreadPool：是大小无界的线程，适用于执行很多短期异步任务的小程序。或者负载轻的服务器。</li>
+</ul>
+<h4 id="ScheduledThreadPoolExecutor"><a href="#ScheduledThreadPoolExecutor" class="headerlink" title="ScheduledThreadPoolExecutor"></a>ScheduledThreadPoolExecutor</h4><ul>
+<li>ScheduledThreadPoolExecutor：包含若干个线程的ScheduledThreadPoolExecutor</li>
+<li>SingleThreadScheduledExecutor：只包含一个线程。适用于单个线程周期执行，顺序执行的场景</li>
+</ul>
+<h4 id="Future接口"><a href="#Future接口" class="headerlink" title="Future接口"></a>Future接口</h4><p>FutureTask用来表示异步的结果</p>
+<h4 id="Runnable和Callable"><a href="#Runnable和Callable" class="headerlink" title="Runnable和Callable"></a>Runnable和Callable</h4><p>他们之间的区别在于Runnable不会返回结果，Callable可以返回结果</p>
+<h3 id="ThreadPoolExecutor详解"><a href="#ThreadPoolExecutor详解" class="headerlink" title="ThreadPoolExecutor详解"></a>ThreadPoolExecutor详解</h3><p>他是线程池的实现类。主要有四部分组成</p>
+<ul>
+<li>corePool：核心线程数大小</li>
+<li>maximumPool：最大线程池的大小</li>
+<li>BlockingQueue：用来暂时保存任务的工作队列</li>
+<li>RejectExecutionHandler：当executor关闭或饱和时，executor方法奖要调用的handler</li>
+</ul>
+<h4 id="FixedThreadPool"><a href="#FixedThreadPool" class="headerlink" title="FixedThreadPool"></a>FixedThreadPool</h4><pre><code class="java">public static ExecutorService newFixedThreadPool(int nThreads) {
+        return new ThreadPoolExecutor(nThreads, nThreads,
+                                      0L, TimeUnit.MILLISECONDS,
+                                      new LinkedBlockingQueue&lt;Runnable&gt;());
+    }</code></pre>
+<p>注意这里的队列没有设置容量，所以是无界队列。</p>
+<h4 id="SingleThreadExecutor"><a href="#SingleThreadExecutor" class="headerlink" title="SingleThreadExecutor"></a>SingleThreadExecutor</h4><pre><code class="java">public static ExecutorService newSingleThreadExecutor() {
+        return new FinalizableDelegatedExecutorService
+            (new ThreadPoolExecutor(1, 1,
+                                    0L, TimeUnit.MILLISECONDS,
+                                    new LinkedBlockingQueue&lt;Runnable&gt;()));
+    }</code></pre>
+<p>注意这里的线程数设置为1。</p>
+<h4 id="CachedThreadPool"><a href="#CachedThreadPool" class="headerlink" title="CachedThreadPool"></a>CachedThreadPool</h4><pre><code class="java">public static ExecutorService newCachedThreadPool() {
+        return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                      60L, TimeUnit.SECONDS,
+                                      new SynchronousQueue&lt;Runnable&gt;());
+    }
+</code></pre>
+<p>这里核心线程数设置为0，最大线程数是无界的，如果主线程提交任务的速度高于处理任务的速度，则会不断创建线程，极端条件下会导致内存溢出</p>
+<h3 id="ScheduledThreadPoolExecutor-1"><a href="#ScheduledThreadPoolExecutor-1" class="headerlink" title="ScheduledThreadPoolExecutor"></a>ScheduledThreadPoolExecutor</h3><p>主要用来给定延迟之后运行任务，或者定期执行任务</p>
+<pre><code class="java">public ScheduledThreadPoolExecutor(int corePoolSize) {
+        super(corePoolSize, Integer.MAX_VALUE, 0, NANOSECONDS,
+              new DelayedWorkQueue());
+    }</code></pre>
+<p>DelayQueue是一个无界队列，封装了一个PriorityQueue，会对ScheduledFutureTask进行排序，time小的放前面（先执行）。</p>
 
-  
+    </div>
+
     
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
+    
+    
         
-          <a class="post-title-link" href="/2019/12/12/linux脚本攻略之让文本飞/" itemprop="url">
-            <span itemprop="name">linux脚本攻略之让文本飞</span>
-          </a>
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/并发/" rel="tag"># 并发</a>
+            
+          </div>
         
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-12-12T15:52:47+08:00"
-              content="2019-12-12">
-          12-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
         
-          <a class="post-title-link" href="/2019/12/08/linux脚本攻略之命令之乐/" itemprop="url">
-            <span itemprop="name">linux脚本攻略之命令之乐</span>
-          </a>
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/03/31/java中的线程池/" rel="next" title="java中的线程池">
+                  <i class="fa fa-chevron-left"></i> java中的线程池
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
         
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-12-08T11:19:34+08:00"
-              content="2019-12-08">
-          12-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/12/07/linux脚本攻略之小试牛刀/" itemprop="url">
-            <span itemprop="name">shell脚本攻略之小试牛刀</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-12-07T09:54:01+08:00"
-              content="2019-12-07">
-          12-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/20/shell之立即linux文件权限/" itemprop="url">
-            <span itemprop="name">shell之立即linux文件权限</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-20T00:15:13+08:00"
-              content="2019-09-20">
-          09-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/14/shell之简单的脚本实用工具/" itemprop="url">
-            <span itemprop="name">shell之简单的脚本实用工具</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-14T16:25:00+08:00"
-              content="2019-09-14">
-          09-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/05/shell之正则表达式/" itemprop="url">
-            <span itemprop="name">shell之正则表达式</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-05T23:56:50+08:00"
-              content="2019-09-05">
-          09-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/05/shell之初识sed和gawk（二）/" itemprop="url">
-            <span itemprop="name">shell之初识sed和gawk（二）</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-05T00:15:40+08:00"
-              content="2019-09-05">
-          09-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/09/02/shell之初识sed和gawk/" itemprop="url">
-            <span itemprop="name">shell之初识sed和gawk（一）</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-09-02T00:08:20+08:00"
-              content="2019-09-02">
-          09-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/08/30/shell之控制脚本/" itemprop="url">
-            <span itemprop="name">shell之控制脚本</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-30T00:21:05+08:00"
-              content="2019-08-30">
-          08-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/08/25/shell之理解输入与输出/" itemprop="url">
-            <span itemprop="name">shell之理解输入与输出</span>
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-25T19:11:03+08:00"
-              content="2019-08-25">
-          08-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    </div>
+      </footer>
+    
   </div>
   
   
   
+  </article>
 
-  
-
+  </div>
 
 
           </div>
@@ -563,6 +403,11 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc" data-target="post-toc-wrap">
@@ -575,6 +420,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Executor框架"><span class="nav-number">1.</span> <span class="nav-text">Executor框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Executor框架的结构"><span class="nav-number">1.1.</span> <span class="nav-text">Executor框架的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ThreadPoolExecutor"><span class="nav-number">1.1.1.</span> <span class="nav-text">ThreadPoolExecutor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ScheduledThreadPoolExecutor"><span class="nav-number">1.1.2.</span> <span class="nav-text">ScheduledThreadPoolExecutor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Future接口"><span class="nav-number">1.1.3.</span> <span class="nav-text">Future接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Runnable和Callable"><span class="nav-number">1.1.4.</span> <span class="nav-text">Runnable和Callable</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadPoolExecutor详解"><span class="nav-number">1.2.</span> <span class="nav-text">ThreadPoolExecutor详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FixedThreadPool"><span class="nav-number">1.2.1.</span> <span class="nav-text">FixedThreadPool</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SingleThreadExecutor"><span class="nav-number">1.2.2.</span> <span class="nav-text">SingleThreadExecutor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CachedThreadPool"><span class="nav-number">1.2.3.</span> <span class="nav-text">CachedThreadPool</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ScheduledThreadPoolExecutor-1"><span class="nav-number">1.3.</span> <span class="nav-text">ScheduledThreadPoolExecutor</span></a></li></ol></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
