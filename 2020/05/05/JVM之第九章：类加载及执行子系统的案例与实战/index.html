@@ -54,20 +54,20 @@
   };
 </script>
 
-  <meta name="description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
-<meta name="keywords" content="shell">
+  <meta name="description" content="第九章：类加载及执行子系统的案例与实战">
+<meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell之控制脚本">
-<meta property="og:url" content="http://harper-yang.github.io/2019/08/30/shell之控制脚本/index.html">
+<meta property="og:title" content="JVM之第九章：类加载及执行子系统的案例与实战">
+<meta property="og:url" content="http://harper-yang.github.io/2020/05/05/JVM之第九章：类加载及执行子系统的案例与实战/index.html">
 <meta property="og:site_name" content="harper-yang">
-<meta property="og:description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
+<meta property="og:description" content="第九章：类加载及执行子系统的案例与实战">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-10T06:02:48.322Z">
+<meta property="og:updated_time" content="2020-05-04T16:03:22.551Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell之控制脚本">
-<meta name="twitter:description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
+<meta name="twitter:title" content="JVM之第九章：类加载及执行子系统的案例与实战">
+<meta name="twitter:description" content="第九章：类加载及执行子系统的案例与实战">
   <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
-  <link rel="canonical" href="http://harper-yang.github.io/2019/08/30/shell之控制脚本/">
+  <link rel="canonical" href="http://harper-yang.github.io/2020/05/05/JVM之第九章：类加载及执行子系统的案例与实战/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>shell之控制脚本 | harper-yang</title>
+  <title>JVM之第九章：类加载及执行子系统的案例与实战 | harper-yang</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -220,7 +220,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2019/08/30/shell之控制脚本/">
+    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2020/05/05/JVM之第九章：类加载及执行子系统的案例与实战/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Harper Yang">
@@ -232,7 +232,7 @@
       <meta itemprop="name" content="harper-yang">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">shell之控制脚本
+        <h1 class="post-title" itemprop="name headline">JVM之第九章：类加载及执行子系统的案例与实战
 
           
         </h1>
@@ -248,33 +248,12 @@
                 
               
 
-              <time title="创建时间：2019-08-30 00:21:05" itemprop="dateCreated datePublished" datetime="2019-08-30T00:21:05+08:00">2019-08-30</time>
+              <time title="创建时间：2020-05-05 00:02:13 / 修改时间：00:03:22" itemprop="dateCreated datePublished" datetime="2020-05-05T00:02:13+08:00">2020-05-05</time>
             </span>
           
             
 
             
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-10 14:02:48" itemprop="dateModified" datetime="2020-03-10T14:02:48+08:00">2020-03-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/理解shell/" itemprop="url" rel="index"><span itemprop="name">理解shell</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -288,120 +267,69 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="控制脚本"><a href="#控制脚本" class="headerlink" title="控制脚本"></a>控制脚本</h2><h3 id="linux-中的信号主要用用来启动，停止，终止进程等操作"><a href="#linux-中的信号主要用用来启动，停止，终止进程等操作" class="headerlink" title="linux 中的信号主要用用来启动，停止，终止进程等操作"></a>linux 中的信号主要用用来启动，停止，终止进程等操作</h3><ul>
-<li><p>下面列出了主要的信号列表</p>
+        <h2 id="第九章：类加载及执行子系统的案例与实战"><a href="#第九章：类加载及执行子系统的案例与实战" class="headerlink" title="第九章：类加载及执行子系统的案例与实战"></a>第九章：类加载及执行子系统的案例与实战</h2><a id="more"></a>
+
+<p>在Class文件以何种方式存储，类型何时加载，如何连接，以及虚拟机如何执行字节码指令等都是虚拟机直接控制的行为，用户程序无法进行改变，能通过程序进行操作的，主要是<strong>字节码生成与类加载器</strong>两部分的功能。</p>
+<h4 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h4><h5 id="Tomcat：正统的类加载器架构"><a href="#Tomcat：正统的类加载器架构" class="headerlink" title="Tomcat：正统的类加载器架构"></a>Tomcat：正统的类加载器架构</h5><p>在Tomcat目录结构中有三组目录可以放Java类库，另外再加上Web应用程序自身的目录</p>
 <ul>
-<li><table>
-<thead>
-<tr>
-<th align="center">信号</th>
-<th align="center">值</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="center">signup</td>
-<td align="center">挂起进程</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="center">sigint</td>
-<td align="center">终止进程</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="center">sigquit</td>
-<td align="center">停止进程</td>
-</tr>
-<tr>
-<td align="center">9</td>
-<td align="center">sigkill</td>
-<td align="center">强杀进程</td>
-</tr>
-<tr>
-<td align="center">15</td>
-<td align="center">sigterm</td>
-<td align="center">尽可能终止进程</td>
-</tr>
-<tr>
-<td align="center">17</td>
-<td align="center">sigstop</td>
-<td align="center">无条件停止进程，而不是终止进程</td>
-</tr>
-<tr>
-<td align="center">18</td>
-<td align="center">sigtstp</td>
-<td align="center">停止h或暂停进程，但不终止进程</td>
-</tr>
-<tr>
-<td align="center">19</td>
-<td align="center">sigcont</td>
-<td align="center">继续运行停止的进程</td>
-</tr>
-</tbody></table>
-<a id="more"></a>
-</li>
+<li>/common/*-类库可以被Tomcat和所有的Web应用程序共同使用</li>
+<li>/server/*-类库可以被Tomcat使用，对所有的Web应用程序不可见</li>
+<li>/shared/*-类可以被所有的Web应用程序共同使用，但是对Tomcat自己不可见</li>
+<li>/WebApp/WEB-INF-类仅仅可以被此Web应用程序使用，对Tomcat和其他的Web应用程序都不可见</li>
 </ul>
-</li>
-<li><p>默认下bash会忽略3，15信号</p>
-</li>
-</ul>
-<h3 id="以后台的方式运行脚本"><a href="#以后台的方式运行脚本" class="headerlink" title="以后台的方式运行脚本"></a>以后台的方式运行脚本</h3><ul>
-<li>有时我们执行命令会需要很长的时间，因此可以使用在后台的方式运行脚本，非常简单，在命令后面加 &amp;。</li>
-<li>但是使用&amp; 这种方式执行脚本的方式要注意，脚本中的输出与shell会混杂在一起，所以最好对脚本中的stdout和stderr进行重定向。</li>
-<li>每次执行时，系统会分配一个pid，要注意的时终端退出的话后台进程都会随之而退出，因此我们需要在终端退出后台进程仍然运行的方法</li>
-</ul>
-<h3 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h3><ul>
-<li>nohup命令会在你退出终端仍然阻止进程结束</li>
-<li>格式是：nohup command &amp;，nohup命令还会自动将stdout和stderr的消息重定向到一个名为nohup.out的文件中</li>
-</ul>
-<h3 id="作业控制"><a href="#作业控制" class="headerlink" title="作业控制"></a>作业控制</h3><ul>
-<li><p>jobs命令可以查询当前正在处理的作业，举个例子</p>
-</li>
-<li><p>执行一段shell脚本，如下vim test.sh</p>
-<pre><code class="shell">#!/bin/bash 
-# Test job control 
-# 
-echo &quot;Script Process ID: $$&quot; 
-# 
-count=1 
-while [ $count -le 10 ] 
-do    
-    echo &quot;Loop #$count&quot;    
-    sleep 10    
-    count=$[ $count + 1 ] 
-done 
-# 
-echo &quot;End of script...&quot; </code></pre>
+<p>Tomcat自定义了多个类加载器，并且按照经典的双亲委派模型来实现</p>
 <ul>
-<li><p>先执行sh test.sh，再ctrl+z停止，再执行sh test.sh &gt; test.out &amp;</p>
-</li>
-<li><p>使用jobs命令查询，jobs -l 结果是</p>
-</li>
-<li><pre><code class="shell">$ jobs -l 
-[1]+  1897 Stopped                 ./test10.sh 
-[2]-  1917 Running                 ./test10.sh &gt; test10.out &amp; </code></pre>
-<p>加号是默认作业，减号是下一个要执行的作业，任何时候都只一个加号一个减号</p>
-</li>
+<li>CommonCLassLoader-&gt;/common/*</li>
+<li>CatalinaClassLoader-&gt;/server/*</li>
+<li>SharedClassLoader-&gt;/shared/*</li>
+<li>WebappClassLoader-&gt;/WebApp/WEB-INF/*，每一个Web应用程序对应一个WebApp类加载器，每一个JSP文件对应一个Jsp类加载器</li>
 </ul>
-</li>
-</ul>
-<h3 id="定时执行任务"><a href="#定时执行任务" class="headerlink" title="定时执行任务"></a>定时执行任务</h3><p>定时执行任务有两种方式，1是at命令，2是cron命令，下面来介绍这cron</p>
-<ul>
-<li><p>cron采用一个特别的时间格式去指定任务何时运行，格式如下</p>
-<ul>
-<li><pre><code>min hour dayofmonth month dayofweek command 
-每天10：15运行：15 10 * * * command
-每周一4：15执行：15 16 * * 1 command
-</code></pre></li>
-<li><p>注意：命令必须是脚本的全路径名</p>
-</li>
-<li><p>crontab -l 可以列出已存在的cron时间表</p>
-</li>
-</ul>
-</li>
-</ul>
+<h5 id="字节码生成技术和动态代理实现"><a href="#字节码生成技术和动态代理实现" class="headerlink" title="字节码生成技术和动态代理实现"></a>字节码生成技术和动态代理实现</h5><pre><code class="java">public class DynamicProxyTest {
+
+    interface IHello {
+        void sayHello();
+    }
+
+    static class Hello implements IHello {
+
+        @Override
+        public void sayHello() {
+            System.out.println(&quot;hello world&quot;);
+        }
+    }
+
+    public static class GoodBye implements IHello {
+
+        @Override
+        public void sayHello() {
+            System.out.println(&quot;say goodBye&quot;);
+        }
+    }
+
+    static class DynamicProxy&lt;T&gt; implements InvocationHandler {
+        T originalObj;
+
+        T bind(T originalObj) {
+            this.originalObj = originalObj;
+            return (T) Proxy.newProxyInstance(originalObj.getClass().getClassLoader(),
+                    originalObj.getClass().getInterfaces(),
+                    this);
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            System.out.println(&quot;welcome&quot;);
+            return method.invoke(originalObj, args);
+        }
+
+        public static void main(String[] args) {
+            IHello hello = new DynamicProxy&lt;IHello&gt;().bind(new Hello());
+            hello.sayHello();
+            IHello hello2 = new DynamicProxy&lt;IHello&gt;().bind(new GoodBye());
+            hello2.sayHello();
+        }
+    }
+}</code></pre>
 
     </div>
 
@@ -417,7 +345,7 @@ echo &quot;End of script...&quot; </code></pre>
           
           <div class="post-tags">
             
-              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/JVM/" rel="tag"># JVM</a>
             
           </div>
         
@@ -427,8 +355,8 @@ echo &quot;End of script...&quot; </code></pre>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/08/25/shell之理解输入与输出/" rel="next" title="shell之理解输入与输出">
-                  <i class="fa fa-chevron-left"></i> shell之理解输入与输出
+                <a href="/2020/05/05/JVM之第八章：虚拟机字节码执行引擎/" rel="next" title="JVM之第八章：虚拟机字节码执行引擎">
+                  <i class="fa fa-chevron-left"></i> JVM之第八章：虚拟机字节码执行引擎
                 </a>
               
             </div>
@@ -436,10 +364,6 @@ echo &quot;End of script...&quot; </code></pre>
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/09/02/shell之初识sed和gawk/" rel="prev" title="shell之初识sed和gawk（一）">
-                  shell之初识sed和gawk（一） <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -488,7 +412,7 @@ echo &quot;End of script...&quot; </code></pre>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#控制脚本"><span class="nav-number">1.</span> <span class="nav-text">控制脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-中的信号主要用用来启动，停止，终止进程等操作"><span class="nav-number">1.1.</span> <span class="nav-text">linux 中的信号主要用用来启动，停止，终止进程等操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以后台的方式运行脚本"><span class="nav-number">1.2.</span> <span class="nav-text">以后台的方式运行脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nohup"><span class="nav-number">1.3.</span> <span class="nav-text">nohup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作业控制"><span class="nav-number">1.4.</span> <span class="nav-text">作业控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定时执行任务"><span class="nav-number">1.5.</span> <span class="nav-text">定时执行任务</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第九章：类加载及执行子系统的案例与实战"><span class="nav-number">1.</span> <span class="nav-text">第九章：类加载及执行子系统的案例与实战</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#案例分析"><span class="nav-number">1.0.1.</span> <span class="nav-text">案例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Tomcat：正统的类加载器架构"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">Tomcat：正统的类加载器架构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#字节码生成技术和动态代理实现"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">字节码生成技术和动态代理实现</span></a></li></ol></li></ol></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->

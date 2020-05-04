@@ -54,20 +54,20 @@
   };
 </script>
 
-  <meta name="description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
-<meta name="keywords" content="shell">
+  <meta name="description" content="第四章：虚拟机性能监控与故障处理工具">
+<meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell之控制脚本">
-<meta property="og:url" content="http://harper-yang.github.io/2019/08/30/shell之控制脚本/index.html">
+<meta property="og:title" content="JVM之第四章：虚拟机性能监控与故障处理工具">
+<meta property="og:url" content="http://harper-yang.github.io/2020/05/04/JVM之第四章：虚拟机性能监控与故障处理工具/index.html">
 <meta property="og:site_name" content="harper-yang">
-<meta property="og:description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
+<meta property="og:description" content="第四章：虚拟机性能监控与故障处理工具">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-10T06:02:48.322Z">
+<meta property="og:updated_time" content="2020-05-04T16:02:54.935Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell之控制脚本">
-<meta name="twitter:description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
+<meta name="twitter:title" content="JVM之第四章：虚拟机性能监控与故障处理工具">
+<meta name="twitter:description" content="第四章：虚拟机性能监控与故障处理工具">
   <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
-  <link rel="canonical" href="http://harper-yang.github.io/2019/08/30/shell之控制脚本/">
+  <link rel="canonical" href="http://harper-yang.github.io/2020/05/04/JVM之第四章：虚拟机性能监控与故障处理工具/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>shell之控制脚本 | harper-yang</title>
+  <title>JVM之第四章：虚拟机性能监控与故障处理工具 | harper-yang</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -220,7 +220,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2019/08/30/shell之控制脚本/">
+    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2020/05/04/JVM之第四章：虚拟机性能监控与故障处理工具/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Harper Yang">
@@ -232,7 +232,7 @@
       <meta itemprop="name" content="harper-yang">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">shell之控制脚本
+        <h1 class="post-title" itemprop="name headline">JVM之第四章：虚拟机性能监控与故障处理工具
 
           
         </h1>
@@ -248,7 +248,7 @@
                 
               
 
-              <time title="创建时间：2019-08-30 00:21:05" itemprop="dateCreated datePublished" datetime="2019-08-30T00:21:05+08:00">2019-08-30</time>
+              <time title="创建时间：2020-05-04 23:58:07" itemprop="dateCreated datePublished" datetime="2020-05-04T23:58:07+08:00">2020-05-04</time>
             </span>
           
             
@@ -259,22 +259,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-10 14:02:48" itemprop="dateModified" datetime="2020-03-10T14:02:48+08:00">2020-03-10</time>
+                <time title="修改时间：2020-05-05 00:02:54" itemprop="dateModified" datetime="2020-05-05T00:02:54+08:00">2020-05-05</time>
               </span>
             
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/理解shell/" itemprop="url" rel="index"><span itemprop="name">理解shell</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -288,121 +275,116 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="控制脚本"><a href="#控制脚本" class="headerlink" title="控制脚本"></a>控制脚本</h2><h3 id="linux-中的信号主要用用来启动，停止，终止进程等操作"><a href="#linux-中的信号主要用用来启动，停止，终止进程等操作" class="headerlink" title="linux 中的信号主要用用来启动，停止，终止进程等操作"></a>linux 中的信号主要用用来启动，停止，终止进程等操作</h3><ul>
-<li><p>下面列出了主要的信号列表</p>
-<ul>
-<li><table>
+        <h2 id="第四章：虚拟机性能监控与故障处理工具"><a href="#第四章：虚拟机性能监控与故障处理工具" class="headerlink" title="第四章：虚拟机性能监控与故障处理工具"></a>第四章：虚拟机性能监控与故障处理工具</h2><a id="more"></a>
+
+<h4 id="JDK的命令行工具"><a href="#JDK的命令行工具" class="headerlink" title="JDK的命令行工具"></a>JDK的命令行工具</h4><h5 id="jps：虚拟机进程状况工具"><a href="#jps：虚拟机进程状况工具" class="headerlink" title="jps：虚拟机进程状况工具"></a>jps：虚拟机进程状况工具</h5><p>jps：JVM Process Status Tool</p>
+<p>主要功能是列出正在运行的虚拟机进程。显示主类函数名称即虚拟机唯一ID</p>
+<pre><code class="shell">jps [options] [hostid]</code></pre>
+<h5 id="jstat：虚拟机统计信息监控工具"><a href="#jstat：虚拟机统计信息监控工具" class="headerlink" title="jstat：虚拟机统计信息监控工具"></a>jstat：虚拟机统计信息监控工具</h5><p>jstat用于监控虚拟机各种运行状态信息的命令行工具。可以显示本地或者远程虚拟机进程中的类加载，内存，垃圾手机，JIT编译等运行数据。</p>
+<pre><code class="shell">jstat [options vmid [interval[s|ms] [count]]]</code></pre>
+<p>主要选项：</p>
+<table>
 <thead>
 <tr>
-<th align="center">信号</th>
-<th align="center">值</th>
-<th align="center">描述</th>
+<th>选项</th>
+<th>作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">1</td>
-<td align="center">signup</td>
-<td align="center">挂起进程</td>
+<td>-class</td>
+<td>监视类装载，卸载数量，空间及时间等</td>
 </tr>
 <tr>
-<td align="center">2</td>
-<td align="center">sigint</td>
-<td align="center">终止进程</td>
+<td>-gc</td>
+<td>监视Java堆状况，包括Eden区，两个survivor区，老年代，永久代，GC时间合计</td>
 </tr>
 <tr>
-<td align="center">3</td>
-<td align="center">sigquit</td>
-<td align="center">停止进程</td>
+<td>-gccapacity</td>
+<td>基本与-gc一致，但是输出主要关注Java堆各个区域使用到的最大，最小空间</td>
 </tr>
 <tr>
-<td align="center">9</td>
-<td align="center">sigkill</td>
-<td align="center">强杀进程</td>
-</tr>
-<tr>
-<td align="center">15</td>
-<td align="center">sigterm</td>
-<td align="center">尽可能终止进程</td>
-</tr>
-<tr>
-<td align="center">17</td>
-<td align="center">sigstop</td>
-<td align="center">无条件停止进程，而不是终止进程</td>
-</tr>
-<tr>
-<td align="center">18</td>
-<td align="center">sigtstp</td>
-<td align="center">停止h或暂停进程，但不终止进程</td>
-</tr>
-<tr>
-<td align="center">19</td>
-<td align="center">sigcont</td>
-<td align="center">继续运行停止的进程</td>
+<td>-gcutil</td>
+<td>输出主要关注已使用空间占总空间的百分比</td>
 </tr>
 </tbody></table>
-<a id="more"></a>
-</li>
-</ul>
-</li>
-<li><p>默认下bash会忽略3，15信号</p>
-</li>
-</ul>
-<h3 id="以后台的方式运行脚本"><a href="#以后台的方式运行脚本" class="headerlink" title="以后台的方式运行脚本"></a>以后台的方式运行脚本</h3><ul>
-<li>有时我们执行命令会需要很长的时间，因此可以使用在后台的方式运行脚本，非常简单，在命令后面加 &amp;。</li>
-<li>但是使用&amp; 这种方式执行脚本的方式要注意，脚本中的输出与shell会混杂在一起，所以最好对脚本中的stdout和stderr进行重定向。</li>
-<li>每次执行时，系统会分配一个pid，要注意的时终端退出的话后台进程都会随之而退出，因此我们需要在终端退出后台进程仍然运行的方法</li>
-</ul>
-<h3 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h3><ul>
-<li>nohup命令会在你退出终端仍然阻止进程结束</li>
-<li>格式是：nohup command &amp;，nohup命令还会自动将stdout和stderr的消息重定向到一个名为nohup.out的文件中</li>
-</ul>
-<h3 id="作业控制"><a href="#作业控制" class="headerlink" title="作业控制"></a>作业控制</h3><ul>
-<li><p>jobs命令可以查询当前正在处理的作业，举个例子</p>
-</li>
-<li><p>执行一段shell脚本，如下vim test.sh</p>
-<pre><code class="shell">#!/bin/bash 
-# Test job control 
-# 
-echo &quot;Script Process ID: $$&quot; 
-# 
-count=1 
-while [ $count -le 10 ] 
-do    
-    echo &quot;Loop #$count&quot;    
-    sleep 10    
-    count=$[ $count + 1 ] 
-done 
-# 
-echo &quot;End of script...&quot; </code></pre>
+<pre><code class="shell">D:\Develop\Java\jdk1.6.0_21\bin&gt;jstat -gcutil 2764
+S0 S1 E O P YGC YGCT FGC FGCT GCT
+0.00 0.00 6.20 41.42 47.20 16 0.105 3 0.472 0.577</code></pre>
 <ul>
-<li><p>先执行sh test.sh，再ctrl+z停止，再执行sh test.sh &gt; test.out &amp;</p>
+<li><p>s0，s1：survivor区</p>
 </li>
-<li><p>使用jobs命令查询，jobs -l 结果是</p>
+<li><p>E：Eden</p>
 </li>
-<li><pre><code class="shell">$ jobs -l 
-[1]+  1897 Stopped                 ./test10.sh 
-[2]-  1917 Running                 ./test10.sh &gt; test10.out &amp; </code></pre>
-<p>加号是默认作业，减号是下一个要执行的作业，任何时候都只一个加号一个减号</p>
+<li><p>O（Old）：老年代</p>
 </li>
-</ul>
+<li><p>P（Permanent）：永久代</p>
 </li>
-</ul>
-<h3 id="定时执行任务"><a href="#定时执行任务" class="headerlink" title="定时执行任务"></a>定时执行任务</h3><p>定时执行任务有两种方式，1是at命令，2是cron命令，下面来介绍这cron</p>
-<ul>
-<li><p>cron采用一个特别的时间格式去指定任务何时运行，格式如下</p>
-<ul>
-<li><pre><code>min hour dayofmonth month dayofweek command 
-每天10：15运行：15 10 * * * command
-每周一4：15执行：15 16 * * 1 command
-</code></pre></li>
-<li><p>注意：命令必须是脚本的全路径名</p>
+<li><p>YGC：yong gc新生代gc</p>
 </li>
-<li><p>crontab -l 可以列出已存在的cron时间表</p>
+<li><p>FGC：full gc</p>
+</li>
+<li><p>FGCT：full gc time</p>
+</li>
+<li><p>GCT：gc time</p>
 </li>
 </ul>
-</li>
-</ul>
-
+<h5 id="jinfo：java配置信息工具"><a href="#jinfo：java配置信息工具" class="headerlink" title="jinfo：java配置信息工具"></a>jinfo：java配置信息工具</h5><p>作用是实时查看和调整虚拟机各项参数</p>
+<h5 id="jmap：Java内存映像工具"><a href="#jmap：Java内存映像工具" class="headerlink" title="jmap：Java内存映像工具"></a>jmap：Java内存映像工具</h5><p>jmap 命令用于生成堆转储快照，获取dump文件。</p>
+<p>主要选项：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-dump</td>
+<td>生成Java堆转储快照</td>
+</tr>
+<tr>
+<td>-heap</td>
+<td>显示Java堆的详细信息，如使用哪种回收器，参数配置，分代状况等</td>
+</tr>
+<tr>
+<td>-histo</td>
+<td>显示堆中的对象统计信息，包括类，实例数量，合计容量</td>
+</tr>
+<tr>
+<td>-permstat</td>
+<td>显示永久代内存状况</td>
+</tr>
+<tr>
+<td>-F</td>
+<td>强制生成dump快照</td>
+</tr>
+</tbody></table>
+<pre><code class="shell">jmap -dump:format=b,file=ecplise.bin 3500 // 生成一个快照</code></pre>
+<h5 id="jhat：虚拟机堆转储快照分析工具"><a href="#jhat：虚拟机堆转储快照分析工具" class="headerlink" title="jhat：虚拟机堆转储快照分析工具"></a>jhat：虚拟机堆转储快照分析工具</h5><p>一个分析工具，一般不用</p>
+<h5 id="jstack：Java堆栈跟踪工具"><a href="#jstack：Java堆栈跟踪工具" class="headerlink" title="jstack：Java堆栈跟踪工具"></a>jstack：Java堆栈跟踪工具</h5><p>jstack命令用于生成虚拟机当前时刻的线程快照。线程快照就是当前虚拟机内每一条线程正在执行的方法堆栈的集合。主要目的是定位线程出现长时间停顿的原因，如线程死锁，死循环等等。</p>
+<pre><code class="shell">jstack [options] vmid</code></pre>
+<p>主要选项：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-F</td>
+<td>当正常输出的请求不被响应时，强制输出线程堆栈</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>除堆栈外，显示关于锁的附加信息</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>如果调用本地方法的话，可以显示c/c++的堆栈</td>
+</tr>
+</tbody></table>
+<pre><code>jstack -l 3500</code></pre><h4 id="JDK的可视化工具"><a href="#JDK的可视化工具" class="headerlink" title="JDK的可视化工具"></a>JDK的可视化工具</h4><h5 id="JConsole：Java监视与管理控制台"><a href="#JConsole：Java监视与管理控制台" class="headerlink" title="JConsole：Java监视与管理控制台"></a>JConsole：Java监视与管理控制台</h5><h5 id="VisualVM：多合一故障处理工具"><a href="#VisualVM：多合一故障处理工具" class="headerlink" title="VisualVM：多合一故障处理工具"></a>VisualVM：多合一故障处理工具</h5>
     </div>
 
     
@@ -417,7 +399,7 @@ echo &quot;End of script...&quot; </code></pre>
           
           <div class="post-tags">
             
-              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/JVM/" rel="tag"># JVM</a>
             
           </div>
         
@@ -427,8 +409,8 @@ echo &quot;End of script...&quot; </code></pre>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/08/25/shell之理解输入与输出/" rel="next" title="shell之理解输入与输出">
-                  <i class="fa fa-chevron-left"></i> shell之理解输入与输出
+                <a href="/2020/05/04/JVM之第三章：垃圾收集器和内存分配策略/" rel="next" title="JVM之第三章：垃圾收集器和内存分配策略">
+                  <i class="fa fa-chevron-left"></i> JVM之第三章：垃圾收集器和内存分配策略
                 </a>
               
             </div>
@@ -437,8 +419,8 @@ echo &quot;End of script...&quot; </code></pre>
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/09/02/shell之初识sed和gawk/" rel="prev" title="shell之初识sed和gawk（一）">
-                  shell之初识sed和gawk（一） <i class="fa fa-chevron-right"></i>
+                <a href="/2020/05/04/JVM之第五章：调优案例分析与实战/" rel="prev" title="JVM之第五章：调优案例分析与实战">
+                  JVM之第五章：调优案例分析与实战 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -488,7 +470,7 @@ echo &quot;End of script...&quot; </code></pre>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#控制脚本"><span class="nav-number">1.</span> <span class="nav-text">控制脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-中的信号主要用用来启动，停止，终止进程等操作"><span class="nav-number">1.1.</span> <span class="nav-text">linux 中的信号主要用用来启动，停止，终止进程等操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以后台的方式运行脚本"><span class="nav-number">1.2.</span> <span class="nav-text">以后台的方式运行脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nohup"><span class="nav-number">1.3.</span> <span class="nav-text">nohup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作业控制"><span class="nav-number">1.4.</span> <span class="nav-text">作业控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定时执行任务"><span class="nav-number">1.5.</span> <span class="nav-text">定时执行任务</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第四章：虚拟机性能监控与故障处理工具"><span class="nav-number">1.</span> <span class="nav-text">第四章：虚拟机性能监控与故障处理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK的命令行工具"><span class="nav-number">1.0.1.</span> <span class="nav-text">JDK的命令行工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#jps：虚拟机进程状况工具"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">jps：虚拟机进程状况工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jstat：虚拟机统计信息监控工具"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">jstat：虚拟机统计信息监控工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jinfo：java配置信息工具"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">jinfo：java配置信息工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jmap：Java内存映像工具"><span class="nav-number">1.0.1.4.</span> <span class="nav-text">jmap：Java内存映像工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jhat：虚拟机堆转储快照分析工具"><span class="nav-number">1.0.1.5.</span> <span class="nav-text">jhat：虚拟机堆转储快照分析工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jstack：Java堆栈跟踪工具"><span class="nav-number">1.0.1.6.</span> <span class="nav-text">jstack：Java堆栈跟踪工具</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK的可视化工具"><span class="nav-number">1.0.2.</span> <span class="nav-text">JDK的可视化工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JConsole：Java监视与管理控制台"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">JConsole：Java监视与管理控制台</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#VisualVM：多合一故障处理工具"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">VisualVM：多合一故障处理工具</span></a></li></ol></li></ol></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->

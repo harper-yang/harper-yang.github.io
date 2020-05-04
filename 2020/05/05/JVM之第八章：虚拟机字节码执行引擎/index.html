@@ -54,20 +54,20 @@
   };
 </script>
 
-  <meta name="description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
-<meta name="keywords" content="shell">
+  <meta name="description" content="第八章：虚拟机字节码执行引擎">
+<meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell之控制脚本">
-<meta property="og:url" content="http://harper-yang.github.io/2019/08/30/shell之控制脚本/index.html">
+<meta property="og:title" content="JVM之第八章：虚拟机字节码执行引擎">
+<meta property="og:url" content="http://harper-yang.github.io/2020/05/05/JVM之第八章：虚拟机字节码执行引擎/index.html">
 <meta property="og:site_name" content="harper-yang">
-<meta property="og:description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
+<meta property="og:description" content="第八章：虚拟机字节码执行引擎">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-10T06:02:48.322Z">
+<meta property="og:updated_time" content="2020-05-04T16:03:12.573Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell之控制脚本">
-<meta name="twitter:description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
+<meta name="twitter:title" content="JVM之第八章：虚拟机字节码执行引擎">
+<meta name="twitter:description" content="第八章：虚拟机字节码执行引擎">
   <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
-  <link rel="canonical" href="http://harper-yang.github.io/2019/08/30/shell之控制脚本/">
+  <link rel="canonical" href="http://harper-yang.github.io/2020/05/05/JVM之第八章：虚拟机字节码执行引擎/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>shell之控制脚本 | harper-yang</title>
+  <title>JVM之第八章：虚拟机字节码执行引擎 | harper-yang</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -220,7 +220,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2019/08/30/shell之控制脚本/">
+    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2020/05/05/JVM之第八章：虚拟机字节码执行引擎/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Harper Yang">
@@ -232,7 +232,7 @@
       <meta itemprop="name" content="harper-yang">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">shell之控制脚本
+        <h1 class="post-title" itemprop="name headline">JVM之第八章：虚拟机字节码执行引擎
 
           
         </h1>
@@ -248,33 +248,12 @@
                 
               
 
-              <time title="创建时间：2019-08-30 00:21:05" itemprop="dateCreated datePublished" datetime="2019-08-30T00:21:05+08:00">2019-08-30</time>
+              <time title="创建时间：2020-05-05 00:01:05 / 修改时间：00:03:12" itemprop="dateCreated datePublished" datetime="2020-05-05T00:01:05+08:00">2020-05-05</time>
             </span>
           
             
 
             
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-10 14:02:48" itemprop="dateModified" datetime="2020-03-10T14:02:48+08:00">2020-03-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/理解shell/" itemprop="url" rel="index"><span itemprop="name">理解shell</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -288,120 +267,38 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="控制脚本"><a href="#控制脚本" class="headerlink" title="控制脚本"></a>控制脚本</h2><h3 id="linux-中的信号主要用用来启动，停止，终止进程等操作"><a href="#linux-中的信号主要用用来启动，停止，终止进程等操作" class="headerlink" title="linux 中的信号主要用用来启动，停止，终止进程等操作"></a>linux 中的信号主要用用来启动，停止，终止进程等操作</h3><ul>
-<li><p>下面列出了主要的信号列表</p>
+        <h2 id="第八章：虚拟机字节码执行引擎"><a href="#第八章：虚拟机字节码执行引擎" class="headerlink" title="第八章：虚拟机字节码执行引擎"></a>第八章：虚拟机字节码执行引擎</h2><a id="more"></a>
+
+<h4 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h4><p>栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构。它是虚拟机栈中的栈元素。栈帧中存储了方法的局部变量表，操作数栈，动态链接和方法返回地址等信息。每一个方法调用从开始至执行完成的过程，都对应着一个栈帧在虚拟机栈里面从入栈到出战的过程。</p>
+<p>接下来讲解栈帧中的局部变量表，操作数栈，动态链接，方法返回地址等各个部分的作用和数据结构</p>
+<h5 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h5><p>是一组变量值存储空间，用于存放方法参数和方法内部定义的局部变量。在编译时，就在方法的Code属性的max_locals数据项中确认了该方法所需要分配的局部变量表的最大容量。</p>
+<h5 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h5><p>他是一个后入先出站。同局部变量表一样，操作数栈的最大深度也在编译时写入到Code属性的max_stacks数据项中。栈中的每一个元素可以是java的任意类型，32位的栈容量为1，64位的栈容量为2。</p>
+<p>Java虚拟机的解释执行引擎成为“基于栈的执行引擎”，其中所指的“栈”就是操作数栈。</p>
+<h5 id="动态连接"><a href="#动态连接" class="headerlink" title="动态连接"></a>动态连接</h5><p>每个栈帧都包含一个指向运行时常量池中该栈所述方法的引用，持有这个引用的是为了支持方法调用过程中的动态连接。</p>
+<h5 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h5><p>….</p>
+<h4 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h4><p>方法调用不等于方法执行，方法调用阶段是确定要用哪一个方法。Class文件编译过程中不包含传统编译的连接步骤，一切方法调用在Class文件里面只是符号引用，而不是方法在实际运行是内存布局的入口地址（直接引用）。这个特性给Java带来了强大的动态扩展能力。在类加载期间，甚至运行期间才能确定目标方法的直接引用。</p>
+<h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><p>所有方法调用的目标方法在Class文件中都是常量池中的符号引用，在类加载的解析阶段，会将其中一部分转换成直接引用。前提是：方法在程序真正运行前就已经确定了。编译期可知，运行期不可变。</p>
+<p>符合条件的方法是：静态方法和私有方法，实例构造器，父类方法。</p>
+<h5 id="分派"><a href="#分派" class="headerlink" title="分派"></a>分派</h5><p>分派调用过程会揭示多条性特征的最基本体现，包括重载，重写在Java中如何实现的。</p>
 <ul>
-<li><table>
-<thead>
-<tr>
-<th align="center">信号</th>
-<th align="center">值</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="center">signup</td>
-<td align="center">挂起进程</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="center">sigint</td>
-<td align="center">终止进程</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="center">sigquit</td>
-<td align="center">停止进程</td>
-</tr>
-<tr>
-<td align="center">9</td>
-<td align="center">sigkill</td>
-<td align="center">强杀进程</td>
-</tr>
-<tr>
-<td align="center">15</td>
-<td align="center">sigterm</td>
-<td align="center">尽可能终止进程</td>
-</tr>
-<tr>
-<td align="center">17</td>
-<td align="center">sigstop</td>
-<td align="center">无条件停止进程，而不是终止进程</td>
-</tr>
-<tr>
-<td align="center">18</td>
-<td align="center">sigtstp</td>
-<td align="center">停止h或暂停进程，但不终止进程</td>
-</tr>
-<tr>
-<td align="center">19</td>
-<td align="center">sigcont</td>
-<td align="center">继续运行停止的进程</td>
-</tr>
-</tbody></table>
-<a id="more"></a>
-</li>
+<li>静态分派</li>
 </ul>
-</li>
-<li><p>默认下bash会忽略3，15信号</p>
-</li>
-</ul>
-<h3 id="以后台的方式运行脚本"><a href="#以后台的方式运行脚本" class="headerlink" title="以后台的方式运行脚本"></a>以后台的方式运行脚本</h3><ul>
-<li>有时我们执行命令会需要很长的时间，因此可以使用在后台的方式运行脚本，非常简单，在命令后面加 &amp;。</li>
-<li>但是使用&amp; 这种方式执行脚本的方式要注意，脚本中的输出与shell会混杂在一起，所以最好对脚本中的stdout和stderr进行重定向。</li>
-<li>每次执行时，系统会分配一个pid，要注意的时终端退出的话后台进程都会随之而退出，因此我们需要在终端退出后台进程仍然运行的方法</li>
-</ul>
-<h3 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h3><ul>
-<li>nohup命令会在你退出终端仍然阻止进程结束</li>
-<li>格式是：nohup command &amp;，nohup命令还会自动将stdout和stderr的消息重定向到一个名为nohup.out的文件中</li>
-</ul>
-<h3 id="作业控制"><a href="#作业控制" class="headerlink" title="作业控制"></a>作业控制</h3><ul>
-<li><p>jobs命令可以查询当前正在处理的作业，举个例子</p>
-</li>
-<li><p>执行一段shell脚本，如下vim test.sh</p>
-<pre><code class="shell">#!/bin/bash 
-# Test job control 
-# 
-echo &quot;Script Process ID: $$&quot; 
-# 
-count=1 
-while [ $count -le 10 ] 
-do    
-    echo &quot;Loop #$count&quot;    
-    sleep 10    
-    count=$[ $count + 1 ] 
-done 
-# 
-echo &quot;End of script...&quot; </code></pre>
+<p>虚拟机在重载时是通过参数的静态类型而不是实际类型作为判定依据的。并且静态类型是编译器可知的。</p>
+<p>所有依赖静态类型来定位方法执行版本的分派动作称为静态分派；典型应用就是方法重载。</p>
 <ul>
-<li><p>先执行sh test.sh，再ctrl+z停止，再执行sh test.sh &gt; test.out &amp;</p>
-</li>
-<li><p>使用jobs命令查询，jobs -l 结果是</p>
-</li>
-<li><pre><code class="shell">$ jobs -l 
-[1]+  1897 Stopped                 ./test10.sh 
-[2]-  1917 Running                 ./test10.sh &gt; test10.out &amp; </code></pre>
-<p>加号是默认作业，减号是下一个要执行的作业，任何时候都只一个加号一个减号</p>
-</li>
+<li>动态分派</li>
 </ul>
-</li>
-</ul>
-<h3 id="定时执行任务"><a href="#定时执行任务" class="headerlink" title="定时执行任务"></a>定时执行任务</h3><p>定时执行任务有两种方式，1是at命令，2是cron命令，下面来介绍这cron</p>
+<p>典型的应用是重写，我们把在运行期根据实际类型确定方法执行版本的分派过程称为动态分派</p>
 <ul>
-<li><p>cron采用一个特别的时间格式去指定任务何时运行，格式如下</p>
-<ul>
-<li><pre><code>min hour dayofmonth month dayofweek command 
-每天10：15运行：15 10 * * * command
-每周一4：15执行：15 16 * * 1 command
-</code></pre></li>
-<li><p>注意：命令必须是脚本的全路径名</p>
-</li>
-<li><p>crontab -l 可以列出已存在的cron时间表</p>
-</li>
+<li>单分派与多分派</li>
 </ul>
-</li>
-</ul>
+<p>单分派是根据一个宗量对目标方法进行选择，多分派是根据多余一个宗量对目标方法进行选择。</p>
+<p>Java是一门静态多分派，动态单分派的语言。</p>
+<p>在JDK1.7中实现的JSR—-292开始提供对动态语言的支持，新增了invokedynamic指令。</p>
+<h5 id="动态类型语言支持"><a href="#动态类型语言支持" class="headerlink" title="动态类型语言支持"></a>动态类型语言支持</h5><p>随着JDK7的发布，字节码指令集迎来新成员-invokedynamic指令。该指令就是为实现动态类型语言支持而进行的改进之一。</p>
+<h6 id="动态类型语言"><a href="#动态类型语言" class="headerlink" title="动态类型语言"></a>动态类型语言</h6><p>动态类型语言的关键特征就是它的类型检查的主题过程是在运行期不是编译期(Groovy JavaScript)。相对的，编译器就进行类型检查的语言是静态类型语言（C++ JAVA）</p>
+<h4 id="基于栈的字节码解释执行引擎"><a href="#基于栈的字节码解释执行引擎" class="headerlink" title="基于栈的字节码解释执行引擎"></a>基于栈的字节码解释执行引擎</h4><p>许多Java虚拟机的执行引擎在执行Java代码的时候都有解释执行和编译执行两种选择。</p>
+<h5 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h5><p>…</p>
 
     </div>
 
@@ -417,7 +314,7 @@ echo &quot;End of script...&quot; </code></pre>
           
           <div class="post-tags">
             
-              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/JVM/" rel="tag"># JVM</a>
             
           </div>
         
@@ -427,8 +324,8 @@ echo &quot;End of script...&quot; </code></pre>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/08/25/shell之理解输入与输出/" rel="next" title="shell之理解输入与输出">
-                  <i class="fa fa-chevron-left"></i> shell之理解输入与输出
+                <a href="/2020/05/05/JVM之第七章：虚拟机类加载机制/" rel="next" title="JVM之第七章：虚拟机类加载机制">
+                  <i class="fa fa-chevron-left"></i> JVM之第七章：虚拟机类加载机制
                 </a>
               
             </div>
@@ -437,8 +334,8 @@ echo &quot;End of script...&quot; </code></pre>
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/09/02/shell之初识sed和gawk/" rel="prev" title="shell之初识sed和gawk（一）">
-                  shell之初识sed和gawk（一） <i class="fa fa-chevron-right"></i>
+                <a href="/2020/05/05/JVM之第九章：类加载及执行子系统的案例与实战/" rel="prev" title="JVM之第九章：类加载及执行子系统的案例与实战">
+                  JVM之第九章：类加载及执行子系统的案例与实战 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -488,7 +385,7 @@ echo &quot;End of script...&quot; </code></pre>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#控制脚本"><span class="nav-number">1.</span> <span class="nav-text">控制脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-中的信号主要用用来启动，停止，终止进程等操作"><span class="nav-number">1.1.</span> <span class="nav-text">linux 中的信号主要用用来启动，停止，终止进程等操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以后台的方式运行脚本"><span class="nav-number">1.2.</span> <span class="nav-text">以后台的方式运行脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nohup"><span class="nav-number">1.3.</span> <span class="nav-text">nohup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作业控制"><span class="nav-number">1.4.</span> <span class="nav-text">作业控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定时执行任务"><span class="nav-number">1.5.</span> <span class="nav-text">定时执行任务</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第八章：虚拟机字节码执行引擎"><span class="nav-number">1.</span> <span class="nav-text">第八章：虚拟机字节码执行引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运行时栈帧结构"><span class="nav-number">1.0.1.</span> <span class="nav-text">运行时栈帧结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#局部变量表"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">局部变量表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#操作数栈"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">操作数栈</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态连接"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">动态连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#方法返回地址"><span class="nav-number">1.0.1.4.</span> <span class="nav-text">方法返回地址</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法调用"><span class="nav-number">1.0.2.</span> <span class="nav-text">方法调用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解析"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分派"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">分派</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动态类型语言支持"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">动态类型语言支持</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#动态类型语言"><span class="nav-number">1.0.2.3.1.</span> <span class="nav-text">动态类型语言</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于栈的字节码解释执行引擎"><span class="nav-number">1.0.3.</span> <span class="nav-text">基于栈的字节码解释执行引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解释执行"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">解释执行</span></a></li></ol></li></ol></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->

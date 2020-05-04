@@ -54,20 +54,20 @@
   };
 </script>
 
-  <meta name="description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
-<meta name="keywords" content="shell">
+  <meta name="description" content="第二章：Java内存区域与内存溢出异常Java虚拟机管理的内存包含以下运行时数据区域：  方法区（Method Area） 虚拟机栈(VM Stack) 本地方法栈(Native Method Stack) 堆(Heap) 程序计数器(Program counter Register)">
+<meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell之控制脚本">
-<meta property="og:url" content="http://harper-yang.github.io/2019/08/30/shell之控制脚本/index.html">
+<meta property="og:title" content="JVM之第二章：Java内存区域和内存溢出区域">
+<meta property="og:url" content="http://harper-yang.github.io/2020/05/04/JVM之第二章：Java内存区域和内存溢出区域/index.html">
 <meta property="og:site_name" content="harper-yang">
-<meta property="og:description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
+<meta property="og:description" content="第二章：Java内存区域与内存溢出异常Java虚拟机管理的内存包含以下运行时数据区域：  方法区（Method Area） 虚拟机栈(VM Stack) 本地方法栈(Native Method Stack) 堆(Heap) 程序计数器(Program counter Register)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-10T06:02:48.322Z">
+<meta property="og:updated_time" content="2020-05-04T15:56:42.238Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell之控制脚本">
-<meta name="twitter:description" content="控制脚本linux 中的信号主要用用来启动，停止，终止进程等操作 下面列出了主要的信号列表     信号 值 描述    1 signup 挂起进程   2 sigint 终止进程   3 sigquit 停止进程   9 sigkill 强杀进程   15 sigterm 尽可能终止进程   17 sigstop 无条件停止进程，而不是终止进程   18 sigtstp 停止h或暂停进程，但不终">
+<meta name="twitter:title" content="JVM之第二章：Java内存区域和内存溢出区域">
+<meta name="twitter:description" content="第二章：Java内存区域与内存溢出异常Java虚拟机管理的内存包含以下运行时数据区域：  方法区（Method Area） 虚拟机栈(VM Stack) 本地方法栈(Native Method Stack) 堆(Heap) 程序计数器(Program counter Register)">
   <link rel="alternate" href="/atom.xml" title="harper-yang" type="application/atom+xml">
-  <link rel="canonical" href="http://harper-yang.github.io/2019/08/30/shell之控制脚本/">
+  <link rel="canonical" href="http://harper-yang.github.io/2020/05/04/JVM之第二章：Java内存区域和内存溢出区域/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>shell之控制脚本 | harper-yang</title>
+  <title>JVM之第二章：Java内存区域和内存溢出区域 | harper-yang</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -220,7 +220,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2019/08/30/shell之控制脚本/">
+    <link itemprop="mainEntityOfPage" href="http://harper-yang.github.io/2020/05/04/JVM之第二章：Java内存区域和内存溢出区域/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Harper Yang">
@@ -232,7 +232,7 @@
       <meta itemprop="name" content="harper-yang">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">shell之控制脚本
+        <h1 class="post-title" itemprop="name headline">JVM之第二章：Java内存区域和内存溢出区域
 
           
         </h1>
@@ -248,33 +248,12 @@
                 
               
 
-              <time title="创建时间：2019-08-30 00:21:05" itemprop="dateCreated datePublished" datetime="2019-08-30T00:21:05+08:00">2019-08-30</time>
+              <time title="创建时间：2020-05-04 23:55:35 / 修改时间：23:56:42" itemprop="dateCreated datePublished" datetime="2020-05-04T23:55:35+08:00">2020-05-04</time>
             </span>
           
             
 
             
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-10 14:02:48" itemprop="dateModified" datetime="2020-03-10T14:02:48+08:00">2020-03-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/理解shell/" itemprop="url" rel="index"><span itemprop="name">理解shell</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -288,121 +267,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="控制脚本"><a href="#控制脚本" class="headerlink" title="控制脚本"></a>控制脚本</h2><h3 id="linux-中的信号主要用用来启动，停止，终止进程等操作"><a href="#linux-中的信号主要用用来启动，停止，终止进程等操作" class="headerlink" title="linux 中的信号主要用用来启动，停止，终止进程等操作"></a>linux 中的信号主要用用来启动，停止，终止进程等操作</h3><ul>
-<li><p>下面列出了主要的信号列表</p>
+        <h2 id="第二章：Java内存区域与内存溢出异常"><a href="#第二章：Java内存区域与内存溢出异常" class="headerlink" title="第二章：Java内存区域与内存溢出异常"></a>第二章：Java内存区域与内存溢出异常</h2><p>Java虚拟机管理的内存包含以下运行时数据区域：</p>
 <ul>
-<li><table>
-<thead>
-<tr>
-<th align="center">信号</th>
-<th align="center">值</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">1</td>
-<td align="center">signup</td>
-<td align="center">挂起进程</td>
-</tr>
-<tr>
-<td align="center">2</td>
-<td align="center">sigint</td>
-<td align="center">终止进程</td>
-</tr>
-<tr>
-<td align="center">3</td>
-<td align="center">sigquit</td>
-<td align="center">停止进程</td>
-</tr>
-<tr>
-<td align="center">9</td>
-<td align="center">sigkill</td>
-<td align="center">强杀进程</td>
-</tr>
-<tr>
-<td align="center">15</td>
-<td align="center">sigterm</td>
-<td align="center">尽可能终止进程</td>
-</tr>
-<tr>
-<td align="center">17</td>
-<td align="center">sigstop</td>
-<td align="center">无条件停止进程，而不是终止进程</td>
-</tr>
-<tr>
-<td align="center">18</td>
-<td align="center">sigtstp</td>
-<td align="center">停止h或暂停进程，但不终止进程</td>
-</tr>
-<tr>
-<td align="center">19</td>
-<td align="center">sigcont</td>
-<td align="center">继续运行停止的进程</td>
-</tr>
-</tbody></table>
+<li>方法区（Method Area）</li>
+<li>虚拟机栈(VM Stack)</li>
+<li>本地方法栈(Native Method Stack)</li>
+<li>堆(Heap)</li>
+<li>程序计数器(Program counter Register)</li>
+</ul>
 <a id="more"></a>
-</li>
-</ul>
-</li>
-<li><p>默认下bash会忽略3，15信号</p>
-</li>
-</ul>
-<h3 id="以后台的方式运行脚本"><a href="#以后台的方式运行脚本" class="headerlink" title="以后台的方式运行脚本"></a>以后台的方式运行脚本</h3><ul>
-<li>有时我们执行命令会需要很长的时间，因此可以使用在后台的方式运行脚本，非常简单，在命令后面加 &amp;。</li>
-<li>但是使用&amp; 这种方式执行脚本的方式要注意，脚本中的输出与shell会混杂在一起，所以最好对脚本中的stdout和stderr进行重定向。</li>
-<li>每次执行时，系统会分配一个pid，要注意的时终端退出的话后台进程都会随之而退出，因此我们需要在终端退出后台进程仍然运行的方法</li>
-</ul>
-<h3 id="nohup"><a href="#nohup" class="headerlink" title="nohup"></a>nohup</h3><ul>
-<li>nohup命令会在你退出终端仍然阻止进程结束</li>
-<li>格式是：nohup command &amp;，nohup命令还会自动将stdout和stderr的消息重定向到一个名为nohup.out的文件中</li>
-</ul>
-<h3 id="作业控制"><a href="#作业控制" class="headerlink" title="作业控制"></a>作业控制</h3><ul>
-<li><p>jobs命令可以查询当前正在处理的作业，举个例子</p>
-</li>
-<li><p>执行一段shell脚本，如下vim test.sh</p>
-<pre><code class="shell">#!/bin/bash 
-# Test job control 
-# 
-echo &quot;Script Process ID: $$&quot; 
-# 
-count=1 
-while [ $count -le 10 ] 
-do    
-    echo &quot;Loop #$count&quot;    
-    sleep 10    
-    count=$[ $count + 1 ] 
-done 
-# 
-echo &quot;End of script...&quot; </code></pre>
-<ul>
-<li><p>先执行sh test.sh，再ctrl+z停止，再执行sh test.sh &gt; test.out &amp;</p>
-</li>
-<li><p>使用jobs命令查询，jobs -l 结果是</p>
-</li>
-<li><pre><code class="shell">$ jobs -l 
-[1]+  1897 Stopped                 ./test10.sh 
-[2]-  1917 Running                 ./test10.sh &gt; test10.out &amp; </code></pre>
-<p>加号是默认作业，减号是下一个要执行的作业，任何时候都只一个加号一个减号</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="定时执行任务"><a href="#定时执行任务" class="headerlink" title="定时执行任务"></a>定时执行任务</h3><p>定时执行任务有两种方式，1是at命令，2是cron命令，下面来介绍这cron</p>
-<ul>
-<li><p>cron采用一个特别的时间格式去指定任务何时运行，格式如下</p>
-<ul>
-<li><pre><code>min hour dayofmonth month dayofweek command 
-每天10：15运行：15 10 * * * command
-每周一4：15执行：15 16 * * 1 command
-</code></pre></li>
-<li><p>注意：命令必须是脚本的全路径名</p>
-</li>
-<li><p>crontab -l 可以列出已存在的cron时间表</p>
-</li>
-</ul>
-</li>
-</ul>
 
+<h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>程序计数器是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令。分支，循环，异常，线程恢复都需要以来这个计数器。</p>
+<p>每个线程都需要一个独立的程序计数器。</p>
+<h4 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h4><p>Java虚拟机栈的生命周期和线程相同。每个方法在执行的时候会创建一个栈帧用于存储局部变量表，操作数栈，动态链接，方法出口等。</p>
+<p>局部变量表存放了各种基本数据类型，对象引用指针。局部变量表所需的内存空间在编译器完成分配，进入方法时，所需要分配多大的局部变量空间时完全确定的。</p>
+<p>如果线程请求的栈深度大于虚拟机所需要的深度，抛出<code>StackOverFlowError</code>异常。</p>
+<p>如果虚拟机栈动态扩展时无法申请到足够的内存，会抛出<code>OutOfmemoryError</code>异常。</p>
+<h4 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h4><p>本地方法栈和虚拟机栈的作用类似，一个是执行本地方法的，一个是执行java方法的。</p>
+<h4 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h4><p>Java堆是Java虚拟机中所管理的内存最大的一块，Java堆是被所有线程共享的一块内存区域。唯一目的就是存放对象实例。</p>
+<p>Java堆是垃圾收集器管理的主要区域。由于现在收集器基本采用分代收集算法，所以Java堆分为新生代，老年代。</p>
+<p>如果堆中没有内存完成实例分配，会抛出<code>OutOfmemoryError</code>异常。</p>
+<h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>方法区也是线程共享的内存区域。用于存储虚拟机加载的类信息，常量，静态变量，即时编译器编译后的代码。方法区被描述为堆的一个逻辑部分。</p>
+<h4 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池是方法区的一部分。用于存放编译期生成的各种字面量和符号引用，再类加载后进入方法去的运行时常量池存放。</p>
+<h4 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h4>
     </div>
 
     
@@ -417,7 +304,7 @@ echo &quot;End of script...&quot; </code></pre>
           
           <div class="post-tags">
             
-              <a href="/tags/shell/" rel="tag"># shell</a>
+              <a href="/tags/JVM/" rel="tag"># JVM</a>
             
           </div>
         
@@ -427,8 +314,8 @@ echo &quot;End of script...&quot; </code></pre>
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/08/25/shell之理解输入与输出/" rel="next" title="shell之理解输入与输出">
-                  <i class="fa fa-chevron-left"></i> shell之理解输入与输出
+                <a href="/2020/03/31/Executor框架/" rel="next" title="Executor框架">
+                  <i class="fa fa-chevron-left"></i> Executor框架
                 </a>
               
             </div>
@@ -437,8 +324,8 @@ echo &quot;End of script...&quot; </code></pre>
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/09/02/shell之初识sed和gawk/" rel="prev" title="shell之初识sed和gawk（一）">
-                  shell之初识sed和gawk（一） <i class="fa fa-chevron-right"></i>
+                <a href="/2020/05/04/JVM之第三章：垃圾收集器和内存分配策略/" rel="prev" title="JVM之第三章：垃圾收集器和内存分配策略">
+                  JVM之第三章：垃圾收集器和内存分配策略 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -488,7 +375,7 @@ echo &quot;End of script...&quot; </code></pre>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#控制脚本"><span class="nav-number">1.</span> <span class="nav-text">控制脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-中的信号主要用用来启动，停止，终止进程等操作"><span class="nav-number">1.1.</span> <span class="nav-text">linux 中的信号主要用用来启动，停止，终止进程等操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以后台的方式运行脚本"><span class="nav-number">1.2.</span> <span class="nav-text">以后台的方式运行脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nohup"><span class="nav-number">1.3.</span> <span class="nav-text">nohup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作业控制"><span class="nav-number">1.4.</span> <span class="nav-text">作业控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定时执行任务"><span class="nav-number">1.5.</span> <span class="nav-text">定时执行任务</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第二章：Java内存区域与内存溢出异常"><span class="nav-number">1.</span> <span class="nav-text">第二章：Java内存区域与内存溢出异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#程序计数器"><span class="nav-number">1.0.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java虚拟机栈"><span class="nav-number">1.0.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#本地方法栈"><span class="nav-number">1.0.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java堆"><span class="nav-number">1.0.4.</span> <span class="nav-text">Java堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法区"><span class="nav-number">1.0.5.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行时常量池"><span class="nav-number">1.0.6.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#直接内存"><span class="nav-number">1.0.7.</span> <span class="nav-text">直接内存</span></a></li></ol></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
